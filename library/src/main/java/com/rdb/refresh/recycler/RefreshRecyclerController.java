@@ -23,7 +23,7 @@ public class RefreshRecyclerController extends RefreshController {
     }
 
     @Override
-    protected boolean supportLoad() {
+    protected final boolean supportLoad() {
         return true;
     }
 

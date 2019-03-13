@@ -12,7 +12,6 @@ import com.rdb.refresh.RefreshContainer;
 
 public class RefreshRecyclerContainer extends RefreshContainer<RecyclerView> {
 
-    private RecyclerView recyclerView;
     private RefreshRecyclerAdapter refreshRecyclerAdapter;
 
     public RefreshRecyclerContainer(Context context) {
@@ -24,19 +23,31 @@ public class RefreshRecyclerContainer extends RefreshContainer<RecyclerView> {
     }
 
     @Override
-    protected RecyclerView createRefreshableView(Context context) {
-        recyclerView = new RecyclerView(context);
-        setRefreshController(new RefreshRecyclerController(recyclerView));
-        return recyclerView;
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        int count = getChildCount();
+        for (int i = 0; i < count; i++) {
+            View child = getChildAt(i);
+            if (child instanceof RecyclerView) {
+                setRefreshableView((RecyclerView) child);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void setRefreshableView(RecyclerView view) {
+        super.setRefreshableView(view);
+        setRefreshController(new RefreshRecyclerController(view));
     }
 
     public void setLayoutManager(@Nullable RecyclerView.LayoutManager layout) {
-        recyclerView.setLayoutManager(layout);
+        refreshableView.setLayoutManager(layout);
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {
         if (adapter == null) {
-            recyclerView.setAdapter(null);
+            refreshableView.setAdapter(null);
         } else {
             refreshRecyclerAdapter = new RefreshRecyclerAdapter(adapter) {
                 @Override
@@ -50,7 +61,7 @@ public class RefreshRecyclerContainer extends RefreshContainer<RecyclerView> {
                     loadController.updateLoadView(refreshItemHolder.itemView, isLoading());
                 }
             };
-            recyclerView.setAdapter(refreshRecyclerAdapter);
+            refreshableView.setAdapter(refreshRecyclerAdapter);
         }
     }
 }

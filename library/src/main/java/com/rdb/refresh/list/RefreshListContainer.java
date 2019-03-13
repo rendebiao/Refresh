@@ -12,7 +12,6 @@ import com.rdb.refresh.RefreshContainer;
 
 public class RefreshListContainer extends RefreshContainer<ListView> {
 
-    private ListView listView;
     private RefreshListAdapter refreshListAdapter;
 
     public RefreshListContainer(Context context) {
@@ -24,15 +23,27 @@ public class RefreshListContainer extends RefreshContainer<ListView> {
     }
 
     @Override
-    protected ListView createRefreshableView(Context context) {
-        listView = new ListView(context);
-        setRefreshController(new RefreshListController(listView));
-        return listView;
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        int count = getChildCount();
+        for (int i = 0; i < count; i++) {
+            View child = getChildAt(i);
+            if (child instanceof ListView) {
+                setRefreshableView((ListView) child);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void setRefreshableView(ListView view) {
+        super.setRefreshableView(view);
+        setRefreshController(new RefreshListController(view));
     }
 
     public void setAdapter(BaseAdapter adapter) {
         if (adapter == null) {
-            listView.setAdapter(null);
+            refreshableView.setAdapter(null);
         } else {
             refreshListAdapter = new RefreshListAdapter(adapter) {
                 @Override
@@ -45,7 +56,7 @@ public class RefreshListContainer extends RefreshContainer<ListView> {
                     loadController.updateLoadView(loadItemView, isLoading());
                 }
             };
-            listView.setAdapter(refreshListAdapter);
+            refreshableView.setAdapter(refreshListAdapter);
         }
     }
 }

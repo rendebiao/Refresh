@@ -39,7 +39,7 @@ public class RefreshListController extends RefreshController {
     }
 
     @Override
-    protected boolean supportLoad() {
+    protected final boolean supportLoad() {
         return true;
     }
 

@@ -6,10 +6,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 
 public abstract class RefreshContainer<T extends View> extends RefreshLayout {
 
+    protected T refreshableView;
     protected LoadController loadController;
     protected RefreshController refreshController;
     private int downY;
@@ -18,7 +18,6 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     private int touchSlop;
     private float touchX;
     private boolean hasMore;
-    private T refreshableView;
     private boolean isLoading = false;
     private OnLoadListener loadListener;
     private boolean interceptHorizontal;
@@ -32,7 +31,6 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         super(context, attrs);
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         distanceY = touchSlop * 5;
-        setRefreshableView(createRefreshableView(context));
     }
 
     public void setMode(RefreshMode mode) {
@@ -90,7 +88,7 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (isBottomEnable() && hasMore && !isRefreshing() && !isLoading) {
+        if (refreshController.supportLoad() && isBottomEnable() && hasMore && !isRefreshing() && !isLoading) {
             final int action = event.getAction();
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
@@ -117,14 +115,8 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         if (refreshController != null) {
             return refreshController.canChildScrollUp();
         }
-        if (refreshableView instanceof ScrollView) {
-            ScrollView scrollView = (ScrollView) refreshableView;
-            return scrollView.getScrollY() > 0;
-        }
         return super.canChildScrollUp();
     }
-
-    protected abstract T createRefreshableView(Context context);
 
     public T getRefreshableView() {
         return refreshableView;

@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ViewActivity"/>
+        <activity android:name=".ScrollActivity"/>
+        <activity android:name=".ListActivity"/>
+        <activity android:name=".GridActivity"/>
+        <activity android:name=".RecyclerActivity"/>
     </application>
 
 </manifest>

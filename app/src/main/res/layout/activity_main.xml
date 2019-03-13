@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.rdb.refresh.recycler.RefreshRecyclerContainer
-        android:id="@+id/refreshContainer"
+   <Button
+       android:id="@+id/viewButton"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="View"/>
+
+    <Button
+        android:id="@+id/scrollButton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:text="ScrollView"/>
+
+    <Button
+        android:id="@+id/listButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ListView"/>
+
+    <Button
+        android:id="@+id/gridButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="GridView"/>
+
+    <Button
+        android:id="@+id/recyclerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RecyclerView"/>
 
 </LinearLayout>
