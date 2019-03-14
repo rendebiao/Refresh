@@ -7,16 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.rdb.refresh.LoadController;
+import com.rdb.refresh.RefreshLoadController;
 
-public abstract class RefreshRecyclerAdapter extends RecyclerView.Adapter<RefreshRecyclerAdapter.RefreshItemHolder> {
+import java.util.List;
 
-    private static final int LOAD_TYPE = Integer.MIN_VALUE;
+class RefreshRecyclerViewAdapter extends RecyclerView.Adapter<RefreshRecyclerViewAdapter.RefreshItemHolder> {
+
+    private static final int LOAD_TYPE_ID = Integer.MIN_VALUE;
 
     private boolean showLoad;
-    private LayoutInflater inflater;
     private RecyclerView.Adapter adapter;
-    private LoadController loadController;
+    private RefreshLoadController loadController;
+    private RefreshRecyclerViewContainer recyclerContainer;
     private RecyclerView.AdapterDataObserver dataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
@@ -55,7 +57,9 @@ public abstract class RefreshRecyclerAdapter extends RecyclerView.Adapter<Refres
         }
     };
 
-    public RefreshRecyclerAdapter(RecyclerView.Adapter adapter) {
+    public RefreshRecyclerViewAdapter(RefreshLoadController loadController, RefreshRecyclerViewContainer recyclerContainer, RecyclerView.Adapter adapter) {
+        this.loadController = loadController;
+        this.recyclerContainer = recyclerContainer;
         setAdapter(adapter);
     }
 
@@ -83,25 +87,24 @@ public abstract class RefreshRecyclerAdapter extends RecyclerView.Adapter<Refres
     @NonNull
     @Override
     public RefreshItemHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        if (viewType == LOAD_TYPE) {
-            return onCreateLoadHolder(viewGroup);
+        if (viewType == LOAD_TYPE_ID) {
+            View view = LayoutInflater.from(recyclerContainer.getContext()).inflate(loadController.getLoadLayout(), viewGroup, false);
+            loadController.initLoadView(view);
+            return new RefreshItemHolder(view, null);
+        } else {
+            RecyclerView.ViewHolder viewHolder = adapter.onCreateViewHolder(viewGroup, viewType);
+            return new RefreshItemHolder(viewHolder.itemView, viewHolder);
         }
-        RecyclerView.ViewHolder viewHolder = adapter.onCreateViewHolder(viewGroup, viewType);
-        return new RefreshItemHolder(viewHolder.itemView, viewHolder);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RefreshItemHolder refreshItemHolder, int position) {
         if (isLoadItem(position)) {
-            onBindLoadHolder(refreshItemHolder);
+            loadController.updateLoadView(refreshItemHolder.itemView, recyclerContainer.isLoading());
         } else {
             adapter.onBindViewHolder(refreshItemHolder.viewHolder, position);
         }
     }
-
-    protected abstract RefreshItemHolder onCreateLoadHolder(ViewGroup viewGroup);
-
-    protected abstract void onBindLoadHolder(RefreshItemHolder refreshItemHolder);
 
     @Override
     public int getItemCount() {
@@ -111,9 +114,80 @@ public abstract class RefreshRecyclerAdapter extends RecyclerView.Adapter<Refres
     @Override
     public int getItemViewType(int position) {
         if (isLoadItem(position)) {
-            return LOAD_TYPE;
+            return LOAD_TYPE_ID;
+        } else {
+            return adapter.getItemViewType(position);
         }
-        return adapter.getItemViewType(position);
+    }
+
+
+    @Override
+    public void onBindViewHolder(@NonNull RefreshItemHolder holder, int position, @NonNull List<Object> payloads) {
+        if (isLoadItem(position)) {
+            super.onBindViewHolder(holder, position, payloads);
+        } else {
+            adapter.onBindViewHolder(holder.viewHolder, position, payloads);
+        }
+    }
+
+    @Override
+    public void setHasStableIds(boolean hasStableIds) {
+        adapter.setHasStableIds(hasStableIds);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        if (isLoadItem(position)) {
+            return LOAD_TYPE_ID;
+        } else {
+            return super.getItemId(position);
+        }
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull RefreshItemHolder holder) {
+        if (holder.viewHolder == null) {
+            super.onViewRecycled(holder);
+        } else {
+            adapter.onViewRecycled(holder.viewHolder);
+        }
+    }
+
+    @Override
+    public boolean onFailedToRecycleView(@NonNull RefreshItemHolder holder) {
+        if (holder.viewHolder == null) {
+            return super.onFailedToRecycleView(holder);
+        } else {
+            return adapter.onFailedToRecycleView(holder.viewHolder);
+        }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull RefreshItemHolder holder) {
+        if (holder.viewHolder == null) {
+            super.onViewAttachedToWindow(holder);
+        } else {
+            adapter.onViewAttachedToWindow(holder.viewHolder);
+        }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull RefreshItemHolder holder) {
+        if (holder.viewHolder == null) {
+            super.onViewDetachedFromWindow(holder);
+        } else {
+            adapter.onViewDetachedFromWindow(holder.viewHolder);
+        }
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        adapter.onAttachedToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        adapter.onDetachedFromRecyclerView(recyclerView);
     }
 
     public static class RefreshItemHolder extends RecyclerView.ViewHolder {

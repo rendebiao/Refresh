@@ -7,13 +7,16 @@
         android:id="@+id/refreshContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="----------1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n----------2\n\n\n\n\n\n\n\n\n\n----------3\n\n\n\n\n\n\n\n\n\n----------4\n\n\n\n\n\n\n\n\n\n----------5\n\n\n\n\n\n\n\n\n\n----------6\n\n\n\n\n\n\n\n\n\n----------7\n\n\n\n\n\n\n\n\n\n----------8\n\n\n\n\n\n\n\n\n\n----------9\n\n\n\n\n\n\n\n\n\n\n----------10"/>
+                android:gravity="center_horizontal"
+                android:text="下拉刷新\n----------1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n----------2\n\n\n\n\n\n\n\n\n\n----------3\n\n\n\n\n\n\n\n\n\n----------4\n\n\n\n\n\n\n\n\n\n----------5\n\n\n\n\n\n\n\n\n\n----------6\n\n\n\n\n\n\n\n\n\n----------7\n\n\n\n\n\n\n\n\n\n----------8\n\n\n\n\n\n\n\n\n\n----------9\n\n\n\n\n\n\n\n\n\n\n----------10" />
         </ScrollView>
     </com.rdb.refresh.view.RefreshViewContainer>
 

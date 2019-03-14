@@ -7,55 +7,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ProgressBar;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.rdb.refresh.RefreshContainer;
-import com.rdb.refresh.RefreshLoadController;
 import com.rdb.refresh.RefreshMode;
-import com.rdb.refresh.abslist.RefreshGridViewContainer;
+import com.rdb.refresh.abslist.RefreshExpandableListViewContainer;
+import com.rdb.refresh.abslist.RefreshListViewContainer;
 
-public class GridActivity extends AppCompatActivity {
+public class ExpandableListActivity extends AppCompatActivity {
+
 
     private int count;
-    private BaseAdapter adapter;
-    private RefreshGridViewContainer refreshContainer;
+    private Adapter adapter;
+    private RefreshExpandableListViewContainer refreshContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grid_layout);
-        getSupportActionBar().setTitle("GridView");
+        setContentView(R.layout.activity_expandable_list_layout);
+        getSupportActionBar().setTitle("ExpandableListView");
         getSupportActionBar().setElevation(0);
         refreshContainer = findViewById(R.id.refreshContainer);
         adapter = new Adapter(getLayoutInflater());
         refreshContainer.setMode(RefreshMode.BOTH);
-        //设置单独控制器 点击加载
-        refreshContainer.setRefreshLoadController(new RefreshLoadController(R.layout.item_load_layout) {
-
-            @Override
-            public boolean autoLoad() {
-                return false;
-            }
-
-            @Override
-            public void updateLoadView(View view, boolean loading) {
-                TextView loadView = view.findViewById(R.id.loadView);
-                ProgressBar progressBar = view.findViewById(R.id.progressBar);
-                loadView.setText(loading ? "正在加载" : "点击加载更多");
-                progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
-                if (!loading) {
-                    view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            refreshContainer.startLoading();
-                        }
-                    });
-                } else {
-                    view.setOnClickListener(null);
-                }
-            }
-        });
         refreshContainer.setAdapter(adapter);
         refreshContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -84,7 +59,7 @@ public class GridActivity extends AppCompatActivity {
         }, 1000);
     }
 
-    class Adapter extends BaseAdapter {
+    class Adapter extends BaseExpandableListAdapter {
 
         private LayoutInflater inflater;
 
@@ -92,30 +67,64 @@ public class GridActivity extends AppCompatActivity {
             this.inflater = inflater;
         }
 
-
         @Override
-        public int getCount() {
+        public int getGroupCount() {
             return count;
         }
 
         @Override
-        public Object getItem(int position) {
+        public int getChildrenCount(int groupPosition) {
+            return 5;
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
             return null;
         }
 
         @Override
-        public long getItemId(int position) {
+        public Object getChild(int groupPosition, int childPosition) {
+            return null;
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
             return 0;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public long getChildId(int groupPosition, int childPosition) {
+            return 0;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.item_text_layout, parent, false);
             }
             TextView textView = convertView.findViewById(R.id.textView);
-            textView.setText("---" + position + "---");
+            textView.setText("---" + groupPosition + "---");
             return convertView;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.item_text_layout, parent, false);
+            }
+            TextView textView = convertView.findViewById(R.id.textView);
+            textView.setText("+++" + childPosition + "++++");
+            return convertView;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return false;
         }
     }
 }

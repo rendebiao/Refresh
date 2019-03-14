@@ -17,12 +17,10 @@ public class RefreshViewContainer extends RefreshContainer<View> {
     }
 
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+    protected void findAndInitRefreshableView() {
         int count = getChildCount();
         if (count > 1) {
             View view = getChildAt(1);
-            removeView(view);
             setRefreshableView(view);
         }
     }

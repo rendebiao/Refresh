@@ -5,17 +5,17 @@ import android.view.View;
 
 import com.rdb.refresh.RefreshController;
 
-public class RefreshRecyclerController extends RefreshController {
+public class RefreshRecyclerViewController extends RefreshController {
 
     private RecyclerView recyclerView;
 
-    public RefreshRecyclerController(RecyclerView recyclerView) {
+    public RefreshRecyclerViewController(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(android.support.v7.widget.RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (container != null && container.isHasMore() && container.isBottomEnable() && !container.isRefreshing() && !container.isLoading() && !isScrollTop() && isReadyForLoading()) {
+                if (container != null && container.autoLoad() && container.isHasMore() && container.isBottomEnable() && !container.isRefreshing() && !container.isLoading() && !isScrollTop() && isReadyForLoading()) {
                     container.startLoading();
                 }
             }
@@ -43,7 +43,7 @@ public class RefreshRecyclerController extends RefreshController {
                     int[] recyclerLocation = new int[2];
                     item.getLocationOnScreen(itemLocation);
                     recyclerView.getLocationOnScreen(recyclerLocation);
-                    return itemLocation[1] + item.getHeight() * 0.5f < recyclerLocation[1] + recyclerView.getHeight() - recyclerView.getPaddingBottom();
+                    return itemLocation[1] < recyclerLocation[1] + recyclerView.getHeight() - recyclerView.getPaddingBottom();
                 }
             }
         }
@@ -53,8 +53,8 @@ public class RefreshRecyclerController extends RefreshController {
     @Override
     protected void onHasMoreChanged(boolean hasMore) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
-        if (adapter instanceof RefreshRecyclerAdapter) {
-            ((RefreshRecyclerAdapter) adapter).setShowLoad(hasMore);
+        if (adapter instanceof RefreshRecyclerViewAdapter) {
+            ((RefreshRecyclerViewAdapter) adapter).setShowLoad(hasMore);
         }
     }
 

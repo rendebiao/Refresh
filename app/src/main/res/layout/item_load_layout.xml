@@ -6,21 +6,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginRight="24dp"
-            style="@style/Widget.AppCompat.ProgressBar"/>
+            android:layout_marginRight="24dp" />
 
         <TextView
             android:id="@+id/loadView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="正在加载"/>
+            android:text="正在加载" />
     </LinearLayout>
 
 

@@ -9,42 +9,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.rdb.refresh.LoadController;
 import com.rdb.refresh.RefreshContainer;
 import com.rdb.refresh.RefreshMode;
-import com.rdb.refresh.recycler.RefreshRecyclerContainer;
+import com.rdb.refresh.recycler.RefreshRecyclerViewContainer;
 
 public class RecyclerActivity extends AppCompatActivity {
 
     private int count;
     private Adapter adapter;
-    private RefreshRecyclerContainer refreshContainer;
+    private RefreshRecyclerViewContainer refreshContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_layout);
         getSupportActionBar().setTitle("RecyclerView");
+        getSupportActionBar().setElevation(0);
         refreshContainer = findViewById(R.id.refreshContainer);
         adapter = new Adapter(getLayoutInflater());
         refreshContainer.setMode(RefreshMode.BOTH);
-        refreshContainer.setLoadController(new LoadController() {
-            @Override
-            public int getLoadLayout() {
-                return R.layout.item_load_layout;
-            }
-
-            @Override
-            public void updateLoadView(View view, boolean loading) {
-                TextView loadView = view.findViewById(R.id.loadView);
-                ProgressBar progressBar = view.findViewById(R.id.progressBar);
-                loadView.setText(loading ? "正在加载" : "上拉加载更多");
-                progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
-            }
-        });
         refreshContainer.setLayoutManager(new LinearLayoutManager(this));
         refreshContainer.setAdapter(adapter);
         refreshContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -60,7 +45,7 @@ public class RecyclerActivity extends AppCompatActivity {
                 load();
             }
         });
-        refreshContainer.startRefreshing(true);
+        refreshContainer.startRefreshingDelay(500, true);
     }
 
     private void load() {

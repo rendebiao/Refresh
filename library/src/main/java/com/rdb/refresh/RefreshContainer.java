@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 public abstract class RefreshContainer<T extends View> extends RefreshLayout {
 
     protected T refreshableView;
-    protected LoadController loadController;
     protected RefreshController refreshController;
+    protected RefreshLoadController loadController;
     private int downY;
     private int lastY;
     private int distanceY;
@@ -19,9 +19,10 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     private float touchX;
     private boolean hasMore;
     private boolean isLoading = false;
-    private OnLoadListener loadListener;
     private boolean interceptHorizontal;
+    private boolean autoLoad;
     private RefreshMode mode = RefreshMode.TOP;
+    private OnLoadListener loadListener;
 
     public RefreshContainer(Context context) {
         this(context, null);
@@ -33,13 +34,24 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         distanceY = touchSlop * 5;
     }
 
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        findAndInitRefreshableView();
+    }
+
+    protected abstract void findAndInitRefreshableView();
+
     public void setMode(RefreshMode mode) {
         this.mode = mode;
         setEnabled(mode != RefreshMode.NONE);
     }
 
-    public void setLoadController(LoadController loadController) {
-        this.loadController = loadController;
+    public void setRefreshLoadController(RefreshLoadController loadController) {
+        if (loadController != null) {
+            this.loadController = loadController;
+            autoLoad = loadController.autoLoad();
+        }
     }
 
     protected void setRefreshController(RefreshController refreshController) {
@@ -88,7 +100,7 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (refreshController.supportLoad() && isBottomEnable() && hasMore && !isRefreshing() && !isLoading) {
+        if (refreshController.supportLoad() && autoLoad && isBottomEnable() && hasMore && !isRefreshing() && !isLoading) {
             final int action = event.getAction();
             switch (action) {
                 case MotionEvent.ACTION_DOWN:
@@ -183,6 +195,10 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
 
     public final boolean isHasMore() {
         return isBottomEnable() && hasMore;
+    }
+
+    public final boolean autoLoad() {
+        return autoLoad;
     }
 
     @Override

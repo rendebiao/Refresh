@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.rdb.refresh.list.RefreshGridContainer
+    <com.rdb.refresh.abslist.RefreshGridViewContainer
         android:id="@+id/refreshContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <GridView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="2"/>
-    </com.rdb.refresh.list.RefreshGridContainer>
+            android:numColumns="2" />
+    </com.rdb.refresh.abslist.RefreshGridViewContainer>
 
 </LinearLayout>

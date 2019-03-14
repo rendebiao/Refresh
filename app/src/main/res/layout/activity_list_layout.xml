@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.rdb.refresh.list.RefreshListContainer
+    <com.rdb.refresh.abslist.RefreshListViewContainer
         android:id="@+id/refreshContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <!--可内嵌子控件 自定义属性-->
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </com.rdb.refresh.list.RefreshListContainer>
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"/>
+    </com.rdb.refresh.abslist.RefreshListViewContainer>
 
 </LinearLayout>

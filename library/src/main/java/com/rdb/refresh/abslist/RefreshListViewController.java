@@ -1,18 +1,19 @@
-package com.rdb.refresh.list;
+package com.rdb.refresh.abslist;
 
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.ListAdapter;
 
 import com.rdb.refresh.RefreshController;
 
-public class RefreshListController extends RefreshController {
+public class RefreshListViewController extends RefreshController {
 
     private AbsListView listView;
     private AbsListView.OnScrollListener scrollListener;
 
-    public RefreshListController(AbsListView listView) {
+    public RefreshListViewController(AbsListView listView) {
         this.listView = listView;
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -27,7 +28,7 @@ public class RefreshListController extends RefreshController {
                 if (scrollListener != null) {
                     scrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
                 }
-                if (container != null && container.isHasMore() && container.isBottomEnable() && !container.isRefreshing() && !container.isLoading() && !isScrollTop() && isReadyForLoading()) {
+                if (container != null && container.autoLoad() && container.isHasMore() && container.isBottomEnable() && !container.isRefreshing() && !container.isLoading() && !isScrollTop() && isReadyForLoading()) {
                     container.startLoading();
                 }
             }
@@ -58,7 +59,7 @@ public class RefreshListController extends RefreshController {
                     int[] listLocation = new int[2];
                     item.getLocationOnScreen(itemLocation);
                     listView.getLocationOnScreen(listLocation);
-                    return itemLocation[1] + item.getHeight() <= listLocation[1] + listView.getHeight() - listView.getPaddingBottom();
+                    return itemLocation[1] <= listLocation[1] + listView.getHeight() - listView.getPaddingBottom();
                 }
             }
         }
@@ -68,8 +69,10 @@ public class RefreshListController extends RefreshController {
     @Override
     protected void onHasMoreChanged(boolean hasMore) {
         ListAdapter adapter = listView.getAdapter();
-        if (adapter instanceof RefreshListAdapter) {
-            ((RefreshListAdapter) adapter).setShowLoad(hasMore);
+        if (adapter instanceof RefreshAbsListViewAdapter) {
+            ((RefreshAbsListViewAdapter) adapter).setShowLoad(hasMore);
+        } else if (adapter instanceof RefreshExpandableListViewAdapter) {
+            ((RefreshExpandableListViewAdapter) adapter).setShowLoad(hasMore);
         }
     }
 
@@ -78,6 +81,8 @@ public class RefreshListController extends RefreshController {
         ListAdapter adapter = listView.getAdapter();
         if (adapter instanceof BaseAdapter) {
             ((BaseAdapter) adapter).notifyDataSetChanged();
+        } else if (adapter instanceof BaseExpandableListAdapter) {
+            ((BaseExpandableListAdapter) adapter).notifyDataSetChanged();
         }
     }
 
