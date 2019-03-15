@@ -3,7 +3,6 @@ package com.rdb.refresh.abslist;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ListAdapter;
 import android.widget.WrapperListAdapter;
 
@@ -75,8 +74,6 @@ public class RefreshAbsListViewController extends RefreshController {
         }
         if (adapter instanceof RefreshAbsListViewAdapter) {
             ((RefreshAbsListViewAdapter) adapter).setShowLoad(hasMore);
-        } else if (adapter instanceof RefreshExpandableListViewAdapter) {
-            ((RefreshExpandableListViewAdapter) adapter).setShowLoad(hasMore);
         }
     }
 
@@ -88,8 +85,6 @@ public class RefreshAbsListViewController extends RefreshController {
         }
         if (adapter instanceof BaseAdapter) {
             ((BaseAdapter) adapter).notifyDataSetChanged();
-        } else if (adapter instanceof BaseExpandableListAdapter) {
-            ((BaseExpandableListAdapter) adapter).notifyDataSetChanged();
         }
     }
 

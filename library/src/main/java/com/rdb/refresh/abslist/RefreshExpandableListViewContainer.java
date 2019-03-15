@@ -44,7 +44,7 @@ public class RefreshExpandableListViewContainer extends RefreshContainer<Expanda
     @Override
     public void setRefreshableView(ExpandableListView view) {
         super.setRefreshableView(view);
-        setRefreshController(new RefreshAbsListViewController(view));
+        setRefreshController(new RefreshExpandableListViewController(view));
     }
 
     public void setAdapter(BaseExpandableListAdapter adapter) {
