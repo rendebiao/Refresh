@@ -158,8 +158,15 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         }
     }
 
-    public final boolean isLoading() {
-        return isLoading;
+    @Override
+    public void setRefreshing(boolean refreshing) {
+        if (refreshing && isBottomEnable()) {
+            if (isBottomEnable()) {
+                this.hasMore = false;
+                refreshController.onHasMoreChanged(hasMore);
+            }
+        }
+        super.setRefreshing(refreshing);
     }
 
     private void setLoading(boolean loading) {
@@ -183,6 +190,10 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
                 e.printStackTrace();
             }
         }
+    }
+
+    public final boolean isLoading() {
+        return isLoading;
     }
 
     public final boolean isTopEnable() {
