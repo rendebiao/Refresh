@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v.getId() == R.id.recyclerButton) {
             Intent intent = new Intent(this, RecyclerActivity.class);
             startActivity(intent);
-        }else if (v.getId() == R.id.expandableButton) {
+        } else if (v.getId() == R.id.expandableButton) {
             Intent intent = new Intent(this, ExpandableListActivity.class);
             startActivity(intent);
         }

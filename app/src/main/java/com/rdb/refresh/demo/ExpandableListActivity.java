@@ -6,14 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.rdb.refresh.RefreshContainer;
 import com.rdb.refresh.RefreshMode;
 import com.rdb.refresh.abslist.RefreshExpandableListViewContainer;
-import com.rdb.refresh.abslist.RefreshListViewContainer;
 
 public class ExpandableListActivity extends AppCompatActivity {
 
@@ -39,6 +37,7 @@ public class ExpandableListActivity extends AppCompatActivity {
                 load();
             }
         });
+        refreshContainer.getRefreshableView().setGroupIndicator(null);
         refreshContainer.setOnLoadListener(new RefreshContainer.OnLoadListener() {
             @Override
             public void onLoad() {
@@ -108,7 +107,7 @@ public class ExpandableListActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.item_text_layout, parent, false);
             }
             TextView textView = convertView.findViewById(R.id.textView);
-            textView.setText("---" + groupPosition + "---");
+            textView.setText("---Group" + groupPosition + "---");
             return convertView;
         }
 
@@ -118,7 +117,7 @@ public class ExpandableListActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.item_text_layout, parent, false);
             }
             TextView textView = convertView.findViewById(R.id.textView);
-            textView.setText("+++" + childPosition + "++++");
+            textView.setText("+++Child" + childPosition + "++++");
             return convertView;
         }
 

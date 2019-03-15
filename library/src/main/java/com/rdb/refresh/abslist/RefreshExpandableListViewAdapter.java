@@ -10,8 +10,6 @@ import com.rdb.refresh.RefreshLoadController;
 
 class RefreshExpandableListViewAdapter extends BaseExpandableListAdapter {
 
-    private static final int LOAD_TYPE_ID = Integer.MIN_VALUE;
-
     private boolean showLoad;
     private RefreshLoadController loadController;
     private BaseExpandableListAdapter adapter;
@@ -75,7 +73,7 @@ class RefreshExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getGroupId(int groupPosition) {
-        return isLoadItem(groupPosition) ? LOAD_TYPE_ID : adapter.getGroupId(groupPosition);
+        return isLoadItem(groupPosition) ? Long.MIN_VALUE : adapter.getGroupId(groupPosition);
     }
 
     @Override
@@ -110,9 +108,9 @@ class RefreshExpandableListViewAdapter extends BaseExpandableListAdapter {
     @Override
     public int getGroupType(int groupPosition) {
         if (isLoadItem(groupPosition)) {
-            return LOAD_TYPE_ID;
+            return 0;
         }
-        return adapter.getGroupType(groupPosition);
+        return adapter.getGroupType(groupPosition) + 1;
     }
 
     @Override
@@ -141,8 +139,8 @@ class RefreshExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getCombinedGroupId(long groupId) {
-        if (groupId == LOAD_TYPE_ID) {
-            return LOAD_TYPE_ID;
+        if (groupId == Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
         } else {
             return adapter.getCombinedGroupId(groupId);
         }

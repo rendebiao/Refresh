@@ -13,8 +13,6 @@ import com.rdb.refresh.RefreshLoadController;
 
 class RefreshAbsListViewAdapter extends BaseAdapter {
 
-    private static final int LOAD_TYPE_ID = Integer.MIN_VALUE;
-
     private boolean showLoad;
     private BaseAdapter adapter;
     private RefreshLoadController loadController;
@@ -69,20 +67,20 @@ class RefreshAbsListViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return isLoadItem(position) ? LOAD_TYPE_ID : adapter.getItemId(position);
+        return isLoadItem(position) ? Long.MIN_VALUE : adapter.getItemId(position);
     }
 
     @Override
     public int getItemViewType(int position) {
         if (isLoadItem(position)) {
-            return LOAD_TYPE_ID;
+            return 0;
         }
-        return adapter.getItemViewType(position);
+        return adapter.getItemViewType(position) + 1;
     }
 
     @Override
     public int getViewTypeCount() {
-        return super.getViewTypeCount() + 1;
+        return adapter.getViewTypeCount() + 1;
     }
 
     @Override

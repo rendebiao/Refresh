@@ -23,6 +23,7 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     private boolean autoLoad;
     private RefreshMode mode = RefreshMode.TOP;
     private OnLoadListener loadListener;
+    private OnRefreshListener refreshListener;
 
     public RefreshContainer(Context context) {
         this(context, null);
@@ -32,6 +33,15 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         super(context, attrs);
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         distanceY = touchSlop * 5;
+        super.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setHasMore(false);
+                if (refreshListener != null) {
+                    refreshListener.onRefresh();
+                }
+            }
+        });
     }
 
     @Override
@@ -61,6 +71,15 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         }
     }
 
+    @Override
+    public void setOnRefreshListener(OnRefreshListener refreshListener) {
+        this.refreshListener = refreshListener;
+    }
+
+    public void setOnLoadListener(OnLoadListener loadListener) {
+        this.loadListener = loadListener;
+    }
+
     public void startLoading() {
         setLoading(true);
     }
@@ -72,10 +91,6 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
                 startLoading();
             }
         }, delay);
-    }
-
-    public void setOnLoadListener(OnLoadListener loadListener) {
-        this.loadListener = loadListener;
     }
 
     public void setInterceptHorizontal(boolean interceptHorizontal) {
@@ -160,13 +175,14 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
 
     @Override
     public void setRefreshing(boolean refreshing) {
-        if (refreshing && isBottomEnable()) {
-            if (isBottomEnable()) {
-                this.hasMore = false;
-                refreshController.onHasMoreChanged(hasMore);
-            }
+        if (refreshing) {
+            setHasMore(false);
         }
         super.setRefreshing(refreshing);
+    }
+
+    public final boolean isLoading() {
+        return isLoading;
     }
 
     private void setLoading(boolean loading) {
@@ -192,10 +208,6 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         }
     }
 
-    public final boolean isLoading() {
-        return isLoading;
-    }
-
     public final boolean isTopEnable() {
         return mode == RefreshMode.TOP || mode == RefreshMode.BOTH;
     }
@@ -206,6 +218,13 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
 
     public final boolean isHasMore() {
         return isBottomEnable() && hasMore;
+    }
+
+    private void setHasMore(boolean hasMore) {
+        if (isBottomEnable()) {
+            this.hasMore = hasMore;
+            refreshController.onHasMoreChanged(hasMore);
+        }
     }
 
     public final boolean autoLoad() {
@@ -221,22 +240,13 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     }
 
     public void notifyComplete(boolean hasMore) {
-        super.notifyComplete();
-        if (isBottomEnable()) {
-            this.hasMore = hasMore;
-            refreshController.onHasMoreChanged(hasMore);
-        }
-        if (isLoading()) {
-            setLoading(false);
-        }
+        setHasMore(hasMore);
+        notifyComplete();
     }
 
     public void notifyComplete(boolean hasMore, int delay) {
-        super.notifyComplete(delay);
-        if (isBottomEnable()) {
-            this.hasMore = hasMore;
-            refreshController.onHasMoreChanged(hasMore);
-        }
+        setHasMore(hasMore);
+        notifyComplete(delay);
     }
 
     public interface OnLoadListener {

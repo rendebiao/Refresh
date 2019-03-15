@@ -11,23 +11,19 @@ import com.rdb.refresh.RefreshController;
 public class RefreshAbsListViewController extends RefreshController {
 
     private AbsListView listView;
-    private AbsListView.OnScrollListener scrollListener;
+    private AbsListScrollListener absListScrollListener = new AbsListScrollListener();
 
     public RefreshAbsListViewController(AbsListView listView) {
         this.listView = listView;
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        listView.setOnScrollListener(absListScrollListener);
+        absListScrollListener.addOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollListener != null) {
-                    scrollListener.onScrollStateChanged(view, scrollState);
-                }
+
             }
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (scrollListener != null) {
-                    scrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
-                }
                 if (container != null && container.autoLoad() && container.isHasMore() && container.isBottomEnable() && !container.isRefreshing() && !container.isLoading() && !isScrollTop() && isReadyForLoading()) {
                     container.startLoading();
                 }
@@ -35,8 +31,16 @@ public class RefreshAbsListViewController extends RefreshController {
         });
     }
 
-    public void setOnScrollListener(AbsListView.OnScrollListener scrollListener) {
-        this.scrollListener = scrollListener;
+    public final void setOnScrollListener(AbsListView.OnScrollListener listener) {
+        absListScrollListener.setOnScrollListener(listener);
+    }
+
+    public void addOnScrollListener(AbsListView.OnScrollListener listener) {
+        absListScrollListener.addOnScrollListener(listener);
+    }
+
+    public void removeOnScrollListener(AbsListView.OnScrollListener listener) {
+        absListScrollListener.removeOnScrollListener(listener);
     }
 
     @Override

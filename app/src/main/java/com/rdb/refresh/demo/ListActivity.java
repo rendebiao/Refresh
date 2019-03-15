@@ -93,7 +93,7 @@ public class ListActivity extends AppCompatActivity {
 
         @Override
         public int getItemViewType(int position) {
-            return position%2;
+            return position % 2;
         }
 
         @Override
