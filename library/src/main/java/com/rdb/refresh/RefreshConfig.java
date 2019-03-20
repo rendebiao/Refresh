@@ -1,15 +1,21 @@
 package com.rdb.refresh;
 
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
+
+import com.rdb.refresh.view.RefreshLayout;
+
 public class RefreshConfig {
 
     int layoutRes;
     int refreshViewId;
-    RefreshMode refreshMode;
+    int refreshMode;
 
-    public RefreshConfig(RefreshMode refreshMode, int layoutRes, int refreshViewId) {
-        if (refreshMode == null || refreshViewId <= 0) {
-            throw new RuntimeException("RefreshConfig 参数不合法");
-        }
+    public RefreshConfig(@RefreshLayout.Mode int refreshMode) {
+        this.refreshMode = refreshMode;
+    }
+
+    public RefreshConfig(@RefreshLayout.Mode int refreshMode, @LayoutRes int layoutRes, @IdRes int refreshViewId) {
         this.refreshMode = refreshMode;
         this.layoutRes = layoutRes;
         this.refreshViewId = refreshViewId;

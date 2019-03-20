@@ -1,12 +1,10 @@
-package com.rdb.refresh.abslist;
+package com.rdb.refresh.view;
 
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.WrapperListAdapter;
-
-import com.rdb.refresh.RefreshController;
 
 import java.util.HashSet;
 import java.util.Set;

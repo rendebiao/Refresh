@@ -1,54 +1,48 @@
 package com.rdb.refresh;
 
-import android.content.Context;
-import android.support.annotation.IdRes;
-import android.view.LayoutInflater;
-import android.view.View;
+import com.rdb.refresh.view.RefreshLoadController;
 
-public abstract class Refresh<V extends RefreshContainer, C extends RefreshConfig, P extends RefreshProxy<V, C>> {
+public class Refresh {
 
-    private View view;
-    private V refreshContainer;
-    private P refreshProxy;
+    private static RefreshLoadController defaultLoadController;
+    private static RefreshLoadController listLoadController;
+    private static RefreshLoadController gridLoadController;
+    private static RefreshLoadController recyclerLoadController;
+    private static RefreshLoadController expandableListLoadController;
 
-    public Refresh(Context context) {
-        refreshProxy = createRefreshProxy();
-        view = LayoutInflater.from(context).inflate(refreshProxy.getLayoutId(), null);
-        refreshProxy.onCreateView(view);
-        refreshContainer = refreshProxy.getRefreshContainer();
+    public static void setDefaultLoadController(RefreshLoadController defaultLoadController) {
+        Refresh.defaultLoadController = defaultLoadController;
     }
 
-    public View getView() {
-        return view;
+    public static RefreshLoadController getListLoadController() {
+        return listLoadController == null ? defaultLoadController : listLoadController;
     }
 
-    public final <T extends View> T findViewById(@IdRes int id) {
-        return view.findViewById(id);
+    public static void setListLoadController(RefreshLoadController listLoadController) {
+        Refresh.listLoadController = listLoadController;
     }
 
-    protected abstract P createRefreshProxy();
-
-    public final P getRefreshProxy() {
-        return refreshProxy;
+    public static RefreshLoadController getGridLoadController() {
+        return gridLoadController == null ? defaultLoadController : gridLoadController;
     }
 
-    public V getRefreshContainer() {
-        return refreshContainer;
+    public static void setGridLoadController(RefreshLoadController gridLoadController) {
+        Refresh.gridLoadController = gridLoadController;
     }
 
-    public void startRefreshing() {
-        refreshProxy.startRefreshing();
+    public static RefreshLoadController getRecyclerLoadController() {
+        return recyclerLoadController == null ? defaultLoadController : recyclerLoadController;
     }
 
-    public void startRefreshingDelay(long delay) {
-        refreshProxy.startRefreshingDelay(delay);
+    public static void setRecyclerLoadController(RefreshLoadController recyclerLoadController) {
+        Refresh.recyclerLoadController = recyclerLoadController;
     }
 
-    public void startLoading() {
-        refreshProxy.startLoading();
+    public static RefreshLoadController getExpandableListLoadController() {
+        return expandableListLoadController == null ? defaultLoadController : expandableListLoadController;
     }
 
-    public void startLoadingDelay(long delay) {
-        refreshProxy.startLoadingDelay(delay);
+    public static void setExpandableListLoadController(RefreshLoadController expandableListLoadController) {
+        Refresh.expandableListLoadController = expandableListLoadController;
     }
 }

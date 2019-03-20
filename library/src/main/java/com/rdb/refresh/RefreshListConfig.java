@@ -1,14 +1,24 @@
 package com.rdb.refresh;
 
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
+
+import com.rdb.refresh.view.RefreshLayout;
+
 public class RefreshListConfig extends RefreshConfig {
 
     int emptyViewId;
 
-    public RefreshListConfig(RefreshMode mode, int layoutRes, int refreshViewId, int emptyViewId) {
+    public RefreshListConfig(@RefreshLayout.Mode int refreshMode) {
+        super(refreshMode);
+    }
+
+    public RefreshListConfig(@RefreshLayout.Mode int refreshMode, @LayoutRes int layoutRes, @IdRes int refreshViewId) {
+        super(refreshMode, layoutRes, refreshViewId);
+    }
+
+    public RefreshListConfig(@RefreshLayout.Mode int mode, @LayoutRes int layoutRes, @IdRes int refreshViewId, @IdRes int emptyViewId) {
         super(mode, layoutRes, refreshViewId);
-        if (mode == null) {
-            throw new RuntimeException("RefreshListConfig 参数不合法");
-        }
         this.emptyViewId = emptyViewId;
     }
 }

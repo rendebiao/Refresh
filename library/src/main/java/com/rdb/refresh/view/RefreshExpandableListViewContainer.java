@@ -1,4 +1,4 @@
-package com.rdb.refresh.abslist;
+package com.rdb.refresh.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,38 +7,40 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
-import com.rdb.refresh.RefreshContainer;
-import com.rdb.refresh.RefreshLoadController;
+import com.rdb.refresh.Refresh;
 
 public class RefreshExpandableListViewContainer extends RefreshContainer<ExpandableListView> {
 
-    private static RefreshLoadController defaultLoadController;
-
     public RefreshExpandableListViewContainer(Context context) {
         super(context);
-        setRefreshLoadController(defaultLoadController);
+        setRefreshLoadController(Refresh.getExpandableListLoadController());
     }
 
     public RefreshExpandableListViewContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setRefreshLoadController(defaultLoadController);
+        setRefreshLoadController(Refresh.getExpandableListLoadController());
     }
 
-    public static void setDefaultRefreshLoadController(RefreshLoadController defaultLoadController) {
-        RefreshExpandableListViewContainer.defaultLoadController = defaultLoadController;
+    public RefreshExpandableListViewContainer(Context context, ExpandableListView refreshableView) {
+        super(context, refreshableView);
+        setRefreshLoadController(Refresh.getExpandableListLoadController());
     }
 
     @Override
-    protected void findAndInitRefreshableView() {
+    protected ExpandableListView findRefreshableView() {
         int count = getChildCount();
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
             if (child instanceof ExpandableListView) {
-                setRefreshableView((ExpandableListView) child);
-                return;
+                return (ExpandableListView) child;
             }
         }
-        setRefreshableView(new ExpandableListView(getContext()));
+        return null;
+    }
+
+    @Override
+    protected ExpandableListView createRefreshableView() {
+        return new ExpandableListView(getContext());
     }
 
     @Override

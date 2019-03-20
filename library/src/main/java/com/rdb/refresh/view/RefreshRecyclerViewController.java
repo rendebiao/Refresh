@@ -1,9 +1,7 @@
-package com.rdb.refresh.recycler;
+package com.rdb.refresh.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import com.rdb.refresh.RefreshController;
 
 public class RefreshRecyclerViewController extends RefreshController {
 

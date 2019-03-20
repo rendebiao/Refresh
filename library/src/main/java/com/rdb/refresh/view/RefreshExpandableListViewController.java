@@ -1,4 +1,4 @@
-package com.rdb.refresh.abslist;
+package com.rdb.refresh.view;
 
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;

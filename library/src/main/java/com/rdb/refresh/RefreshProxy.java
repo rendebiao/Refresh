@@ -1,26 +1,32 @@
 package com.rdb.refresh;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
+import android.view.LayoutInflater;
 import android.view.View;
 
-public abstract class RefreshProxy<V extends RefreshContainer, C extends RefreshConfig> implements Refreshable<C> {
+import com.rdb.refresh.view.RefreshContainer;
 
+public abstract class RefreshProxy<V extends RefreshContainer, C extends RefreshConfig> {
+
+    private View view;
     protected Context context;
     protected C refreshConfig;
     protected V refreshContainer;
 
-    public RefreshProxy(Context context) {
+    public RefreshProxy(Context context, C refreshConfig) {
         this.context = context;
-        refreshConfig = initRefreshConfig();
-    }
-
-    public void onCreateView(View view) {
-        RefreshMode mode = refreshConfig.refreshMode;
-        if (mode == null) {
-            mode = RefreshMode.TOP;
+        this.refreshConfig = refreshConfig;
+        int layoutId = refreshConfig.layoutRes;
+        if (layoutId > 0) {
+            view = LayoutInflater.from(context).inflate(layoutId, null);
         }
-        refreshContainer = (V) view.findViewById(refreshConfig.refreshViewId);
-        refreshContainer.setMode(mode);
+        if (view == null) {
+            view = refreshContainer = createRefreshContainer(context);
+        } else {
+            refreshContainer = (V) view.findViewById(refreshConfig.refreshViewId);
+        }
+        refreshContainer.setMode(refreshConfig.refreshMode);
         if (refreshContainer.isTopEnable()) {
             refreshContainer.setOnRefreshListener(new RefreshContainer.OnRefreshListener() {
                 @Override
@@ -39,12 +45,22 @@ public abstract class RefreshProxy<V extends RefreshContainer, C extends Refresh
         }
     }
 
-    public final V getRefreshContainer() {
-        return refreshContainer;
+    public View getView() {
+        return view;
     }
 
-    public final int getLayoutId() {
-        return refreshConfig.layoutRes;
+    public final <T extends View> T findViewById(@IdRes int id) {
+        return view.findViewById(id);
+    }
+
+    protected abstract V createRefreshContainer(Context context);
+
+    protected abstract void doRefresh();
+
+    protected abstract void doLoad();
+
+    public final V getRefreshContainer() {
+        return refreshContainer;
     }
 
     public void startRefreshing() {
@@ -69,15 +85,5 @@ public abstract class RefreshProxy<V extends RefreshContainer, C extends Refresh
         if (refreshContainer != null) {
             refreshContainer.startLoadingDelay(delay);
         }
-    }
-
-    @Override
-    public void doRefresh() {
-
-    }
-
-    @Override
-    public void doLoad() {
-
     }
 }

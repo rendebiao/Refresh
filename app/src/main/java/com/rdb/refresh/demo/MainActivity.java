@@ -7,11 +7,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.rdb.refresh.RefreshLoadController;
-import com.rdb.refresh.abslist.RefreshExpandableListViewContainer;
-import com.rdb.refresh.abslist.RefreshGridViewContainer;
-import com.rdb.refresh.abslist.RefreshListViewContainer;
-import com.rdb.refresh.recycler.RefreshRecyclerViewContainer;
+import com.rdb.refresh.Refresh;
+import com.rdb.refresh.view.RefreshLoadController;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,10 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
         //设置默认控制器 上拉加载
-        RefreshGridViewContainer.setDefaultRefreshLoadController(defaultControoler);
-        RefreshListViewContainer.setDefaultRefreshLoadController(defaultControoler);
-        RefreshRecyclerViewContainer.setDefaultRefreshLoadController(defaultControoler);
-        RefreshExpandableListViewContainer.setDefaultRefreshLoadController(defaultControoler);
+        Refresh.setDefaultLoadController(defaultControoler);
     }
 
     @Override

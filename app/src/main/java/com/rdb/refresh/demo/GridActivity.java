@@ -10,10 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.rdb.refresh.RefreshContainer;
-import com.rdb.refresh.RefreshLoadController;
-import com.rdb.refresh.RefreshMode;
-import com.rdb.refresh.abslist.RefreshGridViewContainer;
+import com.rdb.refresh.view.RefreshContainer;
+import com.rdb.refresh.view.RefreshGridViewContainer;
+import com.rdb.refresh.view.RefreshLayout;
+import com.rdb.refresh.view.RefreshLoadController;
 
 public class GridActivity extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class GridActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
         refreshContainer = findViewById(R.id.refreshContainer);
         adapter = new Adapter(getLayoutInflater());
-        refreshContainer.setMode(RefreshMode.BOTH);
+        refreshContainer.setMode(RefreshLayout.BOTH);
         //设置单独控制器 点击加载
         refreshContainer.setRefreshLoadController(new RefreshLoadController(R.layout.item_load_layout) {
 

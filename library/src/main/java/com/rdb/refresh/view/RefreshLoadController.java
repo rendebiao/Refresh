@@ -1,4 +1,4 @@
-package com.rdb.refresh;
+package com.rdb.refresh.view;
 
 import android.view.View;
 

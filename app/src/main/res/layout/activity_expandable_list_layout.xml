@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.rdb.refresh.abslist.RefreshExpandableListViewContainer
+    <com.rdb.refresh.view.RefreshExpandableListViewContainer
         android:id="@+id/refreshContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

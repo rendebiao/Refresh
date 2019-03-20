@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public abstract class RefreshTaskRequest<D> extends RefreshRequest<D> {
 
-    public RefreshTaskRequest(RefreshPageProxy refreshPageProxy) {
-        super(refreshPageProxy);
+    public RefreshTaskRequest() {
+
     }
 
     @Override
-    protected void doRequest(final Context context, final int page, final int rowCount, Object lastData) {
+    protected void doRequest(final Context context, final int page, final int rowCount) {
         new AsyncTask<Void, Void, ArrayList<D>>() {
 
             @Override

@@ -1,4 +1,4 @@
-package com.rdb.refresh;
+package com.rdb.refresh.view;
 
 public abstract class RefreshController {
 

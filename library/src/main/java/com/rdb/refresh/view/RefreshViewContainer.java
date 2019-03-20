@@ -4,8 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.rdb.refresh.RefreshContainer;
-
 public class RefreshViewContainer extends RefreshContainer<View> {
 
     public RefreshViewContainer(Context context) {
@@ -17,12 +15,18 @@ public class RefreshViewContainer extends RefreshContainer<View> {
     }
 
     @Override
-    protected void findAndInitRefreshableView() {
+    protected View findRefreshableView() {
         int count = getChildCount();
         if (count > 1) {
-            View view = getChildAt(1);
-            setRefreshableView(view);
+            return getChildAt(1);
         }
+        return null;
+    }
+
+
+    @Override
+    protected View createRefreshableView() {
+        return null;
     }
 
     @Override

@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rdb.refresh.RefreshContainer;
-import com.rdb.refresh.RefreshMode;
-import com.rdb.refresh.recycler.RefreshRecyclerViewContainer;
+import com.rdb.refresh.view.RefreshContainer;
+import com.rdb.refresh.view.RefreshLayout;
+import com.rdb.refresh.view.RefreshRecyclerViewContainer;
 
 public class RecyclerActivity extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class RecyclerActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
         refreshContainer = findViewById(R.id.refreshContainer);
         adapter = new Adapter(getLayoutInflater());
-        refreshContainer.setMode(RefreshMode.BOTH);
+        refreshContainer.setMode(RefreshLayout.BOTH);
         refreshContainer.setLayoutManager(new LinearLayoutManager(this));
         refreshContainer.setAdapter(adapter);
         refreshContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

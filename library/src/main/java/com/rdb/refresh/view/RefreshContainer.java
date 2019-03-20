@@ -1,4 +1,4 @@
-package com.rdb.refresh;
+package com.rdb.refresh.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -21,16 +21,29 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     private boolean isLoading = false;
     private boolean interceptHorizontal;
     private boolean autoLoad;
-    private RefreshMode mode = RefreshMode.TOP;
+    private int mode = TOP;
     private OnLoadListener loadListener;
     private OnRefreshListener refreshListener;
 
     public RefreshContainer(Context context) {
-        this(context, null);
+        this(context, (T) null);
     }
 
     public RefreshContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
+    }
+
+    public RefreshContainer(Context context, T refreshableView) {
+        super(context);
+        init(context);
+        if (refreshableView == null) {
+            refreshableView = createRefreshableView();
+        }
+        setRefreshableView(refreshableView);
+    }
+
+    private void init(Context context) {
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         distanceY = touchSlop * 5;
         super.setOnRefreshListener(new OnRefreshListener() {
@@ -47,14 +60,20 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        findAndInitRefreshableView();
+        T view = findRefreshableView();
+        if (view == null) {
+            view = createRefreshableView();
+        }
+        setRefreshableView(view);
     }
 
-    protected abstract void findAndInitRefreshableView();
+    protected abstract T findRefreshableView();
 
-    public void setMode(RefreshMode mode) {
+    protected abstract T createRefreshableView();
+
+    public void setMode(@Mode int mode) {
         this.mode = mode;
-        setEnabled(mode != RefreshMode.NONE);
+        setEnabled(mode != NONE);
     }
 
     public void setRefreshLoadController(RefreshLoadController loadController) {
@@ -80,17 +99,25 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         this.loadListener = loadListener;
     }
 
-    public void startLoading() {
-        setLoading(true);
+    public boolean startLoading() {
+        if (refreshController.supportLoad()) {
+            setLoading(true);
+            return true;
+        }
+        return false;
     }
 
-    public void startLoadingDelay(long delay) {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startLoading();
-            }
-        }, delay);
+    public boolean startLoadingDelay(long delay) {
+        if (refreshController.supportLoad()) {
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startLoading();
+                }
+            }, delay);
+            return true;
+        }
+        return false;
     }
 
     public void setInterceptHorizontal(boolean interceptHorizontal) {
@@ -209,11 +236,11 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     }
 
     public final boolean isTopEnable() {
-        return mode == RefreshMode.TOP || mode == RefreshMode.BOTH;
+        return mode == TOP || mode == BOTH;
     }
 
     public final boolean isBottomEnable() {
-        return mode == RefreshMode.BOTTOM || mode == RefreshMode.BOTH;
+        return mode == BOTTOM || mode == BOTH;
     }
 
     public final boolean isHasMore() {

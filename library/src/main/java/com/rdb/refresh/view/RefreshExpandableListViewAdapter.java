@@ -1,12 +1,10 @@
-package com.rdb.refresh.abslist;
+package com.rdb.refresh.view;
 
 import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-
-import com.rdb.refresh.RefreshLoadController;
 
 class RefreshExpandableListViewAdapter extends BaseExpandableListAdapter {
 

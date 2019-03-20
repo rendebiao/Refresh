@@ -1,40 +1,43 @@
-package com.rdb.refresh.abslist;
+package com.rdb.refresh.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.GridView;
 
-import com.rdb.refresh.RefreshLoadController;
+import com.rdb.refresh.Refresh;
 
 public class RefreshGridViewContainer extends RefreshAbsListViewContainer<GridView> {
 
-    private static RefreshLoadController defaultLoadController;
-
     public RefreshGridViewContainer(Context context) {
         super(context);
-        setRefreshLoadController(defaultLoadController);
+        setRefreshLoadController(Refresh.getGridLoadController());
     }
 
     public RefreshGridViewContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setRefreshLoadController(defaultLoadController);
+        setRefreshLoadController(Refresh.getGridLoadController());
     }
 
-    public static void setDefaultRefreshLoadController(RefreshLoadController defaultLoadController) {
-        RefreshGridViewContainer.defaultLoadController = defaultLoadController;
+    public RefreshGridViewContainer(Context context, GridView refreshableView) {
+        super(context, refreshableView);
+        setRefreshLoadController(Refresh.getGridLoadController());
     }
 
     @Override
-    protected void findAndInitRefreshableView() {
+    protected GridView findRefreshableView() {
         int count = getChildCount();
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
             if (child instanceof GridView) {
-                setRefreshableView((GridView) child);
-                return;
+                return (GridView) child;
             }
         }
-        setRefreshableView(new GridView(getContext()));
+        return null;
+    }
+
+    @Override
+    protected GridView createRefreshableView() {
+        return new GridView(getContext());
     }
 }

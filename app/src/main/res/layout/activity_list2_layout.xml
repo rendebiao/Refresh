@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.rdb.refresh.abslist.RefreshListViewContainer
+    <com.rdb.refresh.view.RefreshListViewContainer
         android:id="@+id/refreshContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,6 +12,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@android:color/transparent" />
-    </com.rdb.refresh.abslist.RefreshListViewContainer>
+    </com.rdb.refresh.view.RefreshListViewContainer>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="empty"
+        android:visibility="gone" />
+</FrameLayout>

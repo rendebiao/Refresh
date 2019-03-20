@@ -1,15 +1,14 @@
-package com.rdb.refresh.abslist;
+package com.rdb.refresh.view;
 
 import android.database.DataSetObserver;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
-import com.rdb.refresh.RefreshLoadController;
 
 class RefreshAbsListViewAdapter extends BaseAdapter {
 
@@ -34,6 +33,7 @@ class RefreshAbsListViewAdapter extends BaseAdapter {
     public RefreshAbsListViewAdapter(RefreshLoadController loadController, RefreshAbsListViewContainer listContainer, BaseAdapter adapter) {
         this.loadController = loadController;
         this.listContainer = listContainer;
+        Log.e("----", "------------------" + loadController);
         setAdapter(adapter);
     }
 

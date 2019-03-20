@@ -1,40 +1,43 @@
-package com.rdb.refresh.abslist;
+package com.rdb.refresh.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
 
-import com.rdb.refresh.RefreshLoadController;
+import com.rdb.refresh.Refresh;
 
 public class RefreshListViewContainer extends RefreshAbsListViewContainer<ListView> {
 
-    private static RefreshLoadController defaultLoadController;
-
     public RefreshListViewContainer(Context context) {
         super(context);
-        setRefreshLoadController(defaultLoadController);
+        setRefreshLoadController(Refresh.getListLoadController());
     }
 
     public RefreshListViewContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setRefreshLoadController(defaultLoadController);
+        setRefreshLoadController(Refresh.getListLoadController());
     }
 
-    public static void setDefaultRefreshLoadController(RefreshLoadController defaultLoadController) {
-        RefreshListViewContainer.defaultLoadController = defaultLoadController;
+    public RefreshListViewContainer(Context context, ListView refreshableView) {
+        super(context, refreshableView);
+        setRefreshLoadController(Refresh.getListLoadController());
     }
 
     @Override
-    protected void findAndInitRefreshableView() {
+    protected ListView findRefreshableView() {
         int count = getChildCount();
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
             if (child instanceof ListView) {
-                setRefreshableView((ListView) child);
-                return;
+                return (ListView) child;
             }
         }
-        setRefreshableView(new ListView(getContext()));
+        return null;
+    }
+
+    @Override
+    protected ListView createRefreshableView() {
+        return new ListView(getContext());
     }
 }

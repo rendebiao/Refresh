@@ -1,4 +1,4 @@
-package com.rdb.refresh.recycler;
+package com.rdb.refresh.view;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,39 +6,42 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.rdb.refresh.RefreshContainer;
-import com.rdb.refresh.RefreshLoadController;
+import com.rdb.refresh.Refresh;
 
 public class RefreshRecyclerViewContainer extends RefreshContainer<RecyclerView> {
 
-    private static RefreshLoadController defaultLoadController;
     private RefreshRecyclerViewAdapter refreshRecyclerViewAdapter;
 
     public RefreshRecyclerViewContainer(Context context) {
         super(context);
-        setRefreshLoadController(defaultLoadController);
+        setRefreshLoadController(Refresh.getRecyclerLoadController());
     }
 
     public RefreshRecyclerViewContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setRefreshLoadController(defaultLoadController);
+        setRefreshLoadController(Refresh.getRecyclerLoadController());
     }
 
-    public static void setDefaultRefreshLoadController(RefreshLoadController defaultLoadController) {
-        RefreshRecyclerViewContainer.defaultLoadController = defaultLoadController;
+    public RefreshRecyclerViewContainer(Context context, RecyclerView refreshableView) {
+        super(context, refreshableView);
+        setRefreshLoadController(Refresh.getRecyclerLoadController());
     }
 
     @Override
-    protected void findAndInitRefreshableView() {
+    protected RecyclerView findRefreshableView() {
         int count = getChildCount();
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
             if (child instanceof RecyclerView) {
-                setRefreshableView((RecyclerView) child);
-                return;
+                return (RecyclerView) child;
             }
         }
-        setRefreshableView(new RecyclerView(getContext()));
+        return null;
+    }
+
+    @Override
+    protected RecyclerView createRefreshableView() {
+        return new RecyclerView(getContext());
     }
 
     @Override

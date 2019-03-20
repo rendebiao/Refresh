@@ -3,8 +3,6 @@ package com.rdb.refresh.view;
 import android.view.View;
 import android.widget.ScrollView;
 
-import com.rdb.refresh.RefreshController;
-
 public class RefreshViewController extends RefreshController {
 
     private View view;

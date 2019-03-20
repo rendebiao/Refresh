@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.rdb.refresh.RefreshContainer;
-import com.rdb.refresh.RefreshMode;
-import com.rdb.refresh.abslist.RefreshExpandableListViewContainer;
+import com.rdb.refresh.view.RefreshContainer;
+import com.rdb.refresh.view.RefreshExpandableListViewContainer;
+import com.rdb.refresh.view.RefreshLayout;
 
 public class ExpandableListActivity extends AppCompatActivity {
 
@@ -28,7 +28,7 @@ public class ExpandableListActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
         refreshContainer = findViewById(R.id.refreshContainer);
         adapter = new Adapter(getLayoutInflater());
-        refreshContainer.setMode(RefreshMode.BOTH);
+        refreshContainer.setMode(RefreshLayout.BOTH);
         refreshContainer.setAdapter(adapter);
         refreshContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

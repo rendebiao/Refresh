@@ -1,8 +1,10 @@
 package com.rdb.refresh;
 
 import android.content.Context;
-import android.support.v7.widget.ViewStubCompat;
 import android.view.View;
+import android.view.ViewStub;
+
+import com.rdb.refresh.view.RefreshContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,23 +13,21 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
 
     private View emptyView;
     private RefreshPage refreshPage;
-    private ViewStubCompat emptyStub;
+    private ViewStub emptyStub;
     private RefreshRequest<D> refreshRequest;
     private ArrayList<D> dataList = new ArrayList<D>();
     private RefreshEmptyViewController emptyViewController;
 
-    public RefreshPageProxy(Context context) {
-        super(context);
+    public RefreshPageProxy(Context context, RefreshListConfig refreshListConfig, RefreshRequest refreshRequest) {
+        super(context, refreshListConfig);
         refreshPage = initRefreshPage();
-        refreshRequest = initRefreshRequest();
-    }
-
-    @Override
-    public void onCreateView(View view) {
-        super.onCreateView(view);
-        View emptyView = view.findViewById(refreshConfig.emptyViewId);
-        if (emptyView instanceof ViewStubCompat) {
-            emptyStub = (ViewStubCompat) emptyView;
+        this.refreshRequest = refreshRequest;
+        if (refreshRequest != null) {
+            refreshRequest.setRefreshRequest(this);
+        }
+        View emptyView = findViewById(refreshConfig.emptyViewId);
+        if (emptyView instanceof ViewStub) {
+            emptyStub = (ViewStub) emptyView;
         } else {
             this.emptyView = emptyView;
         }
@@ -45,16 +45,14 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
         return new RefreshPage(1, 10);
     }
 
-    protected abstract RefreshRequest initRefreshRequest();
-
     @Override
-    public final void doRefresh() {
+    protected final void doRefresh() {
         refreshPage.curPage = refreshPage.startPage;
         loadData();
     }
 
     @Override
-    public final void doLoad() {
+    protected final void doLoad() {
         loadData();
     }
 
@@ -63,7 +61,11 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
     protected abstract boolean isEmpty();
 
     private void loadData() {
-        refreshRequest.doRequest(context, refreshPage.curPage, refreshPage.rowCount, dataList.size() > 0 ? dataList.get(dataList.size() - 1) : null);
+        if (refreshRequest == null) {
+            throw new RuntimeException("unset RefreshRequest");
+        } else {
+            refreshRequest.doRequest(context, refreshPage.curPage, refreshPage.rowCount);
+        }
     }
 
     /**
@@ -154,6 +156,8 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
     }
 
     public abstract void scrollToTop();
+
+    public abstract void scrollToBottom();
 
     public void setEmptyViewController(RefreshEmptyViewController emptyController) {
         this.emptyViewController = emptyController;

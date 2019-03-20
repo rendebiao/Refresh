@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 
-import com.rdb.refresh.RefreshMode;
+import com.rdb.refresh.view.RefreshLayout;
 import com.rdb.refresh.view.RefreshViewContainer;
 
 public class ScrollActivity extends AppCompatActivity {
@@ -18,7 +18,7 @@ public class ScrollActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("ScrollView");
         getSupportActionBar().setElevation(0);
         refreshContainer = findViewById(R.id.refreshContainer);
-        refreshContainer.setMode(RefreshMode.TOP);
+        refreshContainer.setMode(RefreshLayout.TOP);
         refreshContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

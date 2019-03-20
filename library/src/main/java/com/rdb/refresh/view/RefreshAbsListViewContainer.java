@@ -1,11 +1,9 @@
-package com.rdb.refresh.abslist;
+package com.rdb.refresh.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-
-import com.rdb.refresh.RefreshContainer;
 
 public abstract class RefreshAbsListViewContainer<T extends AbsListView> extends RefreshContainer<T> {
 
@@ -17,6 +15,10 @@ public abstract class RefreshAbsListViewContainer<T extends AbsListView> extends
 
     public RefreshAbsListViewContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public RefreshAbsListViewContainer(Context context, T refreshableView) {
+        super(context, refreshableView);
     }
 
     @Override

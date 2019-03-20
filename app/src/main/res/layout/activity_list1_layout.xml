@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.rdb.refresh.view.RefreshGridViewContainer
+    <com.rdb.refresh.view.RefreshListViewContainer
         android:id="@+id/refreshContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <GridView
+        <!--可内嵌子控件 自定义属性-->
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="2" />
-    </com.rdb.refresh.view.RefreshGridViewContainer>
-
-</LinearLayout>
+            android:divider="@android:color/transparent" />
+    </com.rdb.refresh.view.RefreshListViewContainer>
+</FrameLayout>
