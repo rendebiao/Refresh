@@ -8,6 +8,9 @@ import android.widget.WrapperListAdapter;
 
 import com.rdb.refresh.RefreshController;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class RefreshAbsListViewController extends RefreshController {
 
     private AbsListView listView;
@@ -98,5 +101,44 @@ public class RefreshAbsListViewController extends RefreshController {
                     && listView.getChildAt(0).getTop() == listView.getPaddingTop();
         }
         return true;
+    }
+
+
+    static class AbsListScrollListener implements AbsListView.OnScrollListener {
+
+        private AbsListView.OnScrollListener setListener;
+        private Set<AbsListView.OnScrollListener> scrollListeners = new HashSet<>();
+
+        @Override
+        public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+            if (setListener != null) {
+                setListener.onScrollStateChanged(absListView, scrollState);
+            }
+            for (AbsListView.OnScrollListener listener : scrollListeners) {
+                listener.onScrollStateChanged(absListView, scrollState);
+            }
+        }
+
+        @Override
+        public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            if (setListener != null) {
+                setListener.onScroll(absListView, firstVisibleItem, visibleItemCount, totalItemCount);
+            }
+            for (AbsListView.OnScrollListener listener : scrollListeners) {
+                listener.onScroll(absListView, firstVisibleItem, visibleItemCount, totalItemCount);
+            }
+        }
+
+        public void setOnScrollListener(AbsListView.OnScrollListener listener) {
+            setListener = listener;
+        }
+
+        public void addOnScrollListener(AbsListView.OnScrollListener listener) {
+            scrollListeners.add(listener);
+        }
+
+        public void removeOnScrollListener(AbsListView.OnScrollListener listener) {
+            scrollListeners.remove(listener);
+        }
     }
 }
