@@ -77,7 +77,7 @@ public class ListActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.item_text_layout, parent, false);
             }
             TextView textView = convertView.findViewById(R.id.textView);
-            textView.setText("---" + items.get(position) + "---");
+            textView.setText("---" + getItem(position) + "---");
             return convertView;
         }
 
