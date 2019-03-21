@@ -5,12 +5,12 @@ import android.view.View;
 public abstract class RefreshController<T extends View> {
 
     protected T refreshableView;
-    protected Container container;
+    protected RefreshContainer container;
 
     public RefreshController() {
     }
 
-    void init(Container container, T refreshableView) {
+    void init(RefreshContainer container, T refreshableView) {
         this.container = container;
         onRefreshableViewChanged(this.refreshableView, refreshableView);
         this.refreshableView = refreshableView;

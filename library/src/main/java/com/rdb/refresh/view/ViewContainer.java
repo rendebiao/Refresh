@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-public class ViewContainer extends Container<View> {
+public class ViewContainer extends RefreshContainer<View> {
 
     public ViewContainer(Context context, AttributeSet attrs) {
         super(context, attrs);

@@ -9,23 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ViewActivity" />
-        <activity android:name=".ScrollActivity" />
-        <activity android:name=".RefreshListActivity" />
-        <activity android:name=".RefreshListPageActivity" />
-        <activity android:name=".RefreshGridActivity" />
-        <activity android:name=".RefreshGridPageActivity" />
-        <activity android:name=".RefreshRecyclerActivity" />
-        <activity android:name=".RefreshRecyclerPageActivity" />
-        <activity android:name=".RefreshExpandableListActivity" />
-        <activity android:name=".RefreshExpandableListPageActivity" />
+        <activity android:name=".activity.ViewActivity" />
+        <activity android:name=".activity.ScrollActivity" />
+        <activity android:name=".activity.ListActivity" />
+        <activity android:name=".activity.ListPageActivity" />
+        <activity android:name=".activity.GridActivity" />
+        <activity android:name=".activity.GridPageActivity" />
+        <activity android:name=".activity.RecyclerActivity" />
+        <activity android:name=".activity.PageActivity" />
+        <activity android:name=".activity.ExpandableListActivity" />
+        <activity android:name=".activity.ExpandableListPageActivity" />
     </application>
 
 </manifest>

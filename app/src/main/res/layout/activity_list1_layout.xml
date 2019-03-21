@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.rdb.refresh.view.ListViewContainer
+    <com.rdb.refresh.view.ListContainer
         android:id="@+id/refreshContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,5 +12,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@android:color/transparent" />
-    </com.rdb.refresh.view.ListViewContainer>
+    </com.rdb.refresh.view.ListContainer>
 </FrameLayout>
