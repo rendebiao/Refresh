@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.rdb.refresh.view.RefreshRecyclerViewContainer;
 
-public class RefreshRecyclerViewProxy<D, H extends RecyclerView.ViewHolder> extends RefreshPageProxy<D, RefreshRecyclerViewContainer> {
+public class RefreshRecyclerViewProxy<D> extends RefreshPageProxy<D, RefreshRecyclerViewContainer> {
 
     protected RecyclerView recyclerView;
     protected RefreshBaseRecyclerAdapter<D> adapter;

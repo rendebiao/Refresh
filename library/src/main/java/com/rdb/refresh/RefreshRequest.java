@@ -26,9 +26,9 @@ public abstract class RefreshRequest<D> {
         }
     }
 
-    public void notifyRequestFailure(RefreshRequestError error) {
+    public void notifyRequestFailure(int errorType, Exception e) {
         if (refreshPageProxy != null) {
-            refreshPageProxy.onRequestFailure(error);
+            refreshPageProxy.onRequestFailure(new RefreshRequestError(errorType, e));
         }
     }
 

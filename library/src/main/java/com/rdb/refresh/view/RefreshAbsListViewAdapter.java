@@ -4,7 +4,6 @@ import android.database.DataSetObserver;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ class RefreshAbsListViewAdapter extends BaseAdapter {
     public RefreshAbsListViewAdapter(RefreshLoadController loadController, RefreshAbsListViewContainer listContainer, BaseAdapter adapter) {
         this.loadController = loadController;
         this.listContainer = listContainer;
-        Log.e("----", "------------------" + loadController);
         setAdapter(adapter);
     }
 
