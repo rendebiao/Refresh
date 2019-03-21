@@ -117,12 +117,12 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
     /**
      * 请求失败
      */
-    protected void onRequestFailure(RefreshRequest.ErrorType errorType) {
+    protected void onRequestFailure(RefreshRequestError error) {
         refreshContainer.notifyComplete();
-        updateEmptyView(errorType);
+        updateEmptyView(error);
     }
 
-    private void updateEmptyView(RefreshRequest.ErrorType errorType) {
+    private void updateEmptyView(RefreshRequestError error) {
         if (dataList.isEmpty()) {
             if (emptyView == null && emptyStub != null) {
                 emptyView = emptyStub.inflate();
@@ -130,14 +130,14 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
             if (emptyView != null) {
                 emptyView.setVisibility(View.VISIBLE);
                 if (emptyViewController != null) {
-                    emptyViewController.onEmptyVisible(emptyView, true, errorType);
+                    emptyViewController.onEmptyVisible(emptyView, true, error);
                 }
             }
         } else {
             if (emptyView != null) {
                 emptyView.setVisibility(View.GONE);
                 if (emptyViewController != null) {
-                    emptyViewController.onEmptyVisible(emptyView, false, errorType);
+                    emptyViewController.onEmptyVisible(emptyView, false, error);
                 }
             }
         }

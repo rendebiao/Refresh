@@ -3,21 +3,19 @@ package com.rdb.refresh;
 import android.content.Context;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import com.rdb.refresh.view.RefreshExpandableListViewContainer;
 
-import java.util.ArrayList;
-
-public abstract class RefreshExpandableListViewProxy<D> extends RefreshPageProxy<D, RefreshExpandableListViewContainer> {
+public class RefreshExpandableListViewProxy<D> extends RefreshPageProxy<D, RefreshExpandableListViewContainer> {
 
     protected ExpandableListView listView;
-    protected BaseExpandableListAdapter adapter;
+    protected RefreshBaseExpandableListAdapter<D> adapter;
 
-    public RefreshExpandableListViewProxy(Context context, RefreshListConfig refreshListConfig, RefreshRequest refreshRequest) {
+    public RefreshExpandableListViewProxy(Context context, RefreshListConfig refreshListConfig, RefreshRequest refreshRequest, RefreshBaseExpandableListAdapter<D> adapter) {
         super(context, refreshListConfig, refreshRequest);
         listView = refreshContainer.getRefreshableView();
-        adapter = createAdapter(context, getDataList());
+        adapter.setItems(getDataList());
+        this.adapter = adapter;
         refreshContainer.setAdapter(adapter);
     }
 
@@ -25,8 +23,6 @@ public abstract class RefreshExpandableListViewProxy<D> extends RefreshPageProxy
     protected RefreshExpandableListViewContainer createRefreshContainer(Context context) {
         return new RefreshExpandableListViewContainer(context);
     }
-
-    protected abstract BaseExpandableListAdapter createAdapter(Context context, ArrayList<D> items);
 
     public final void notifyDataSetChanged() {
         if (adapter != null) {
@@ -38,7 +34,7 @@ public abstract class RefreshExpandableListViewProxy<D> extends RefreshPageProxy
         return adapter == null ? false : adapter.isEmpty();
     }
 
-    public ListView getExpandableListView() {
+    public ExpandableListView getRefreshableView() {
         return listView;
     }
 

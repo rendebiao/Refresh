@@ -5,14 +5,12 @@ import android.widget.ListView;
 
 import com.rdb.refresh.view.RefreshListViewContainer;
 
-import java.util.List;
-
 public class RefreshListViewProxy<D> extends RefreshPageProxy<D, RefreshListViewContainer> {
 
     protected ListView listView;
-    protected BaseAdapter adapter;
+    protected RefreshBaseAdapter<D> adapter;
 
-    public RefreshListViewProxy(Context context, RefreshListConfig refreshListConfig, RefreshRequest refreshRequest, BaseAdapter<D> adapter) {
+    public RefreshListViewProxy(Context context, RefreshListConfig refreshListConfig, RefreshRequest refreshRequest, RefreshBaseAdapter<D> adapter) {
         super(context, refreshListConfig, refreshRequest);
         listView = refreshContainer.getRefreshableView();
         adapter.setItems(getDataList());
@@ -35,11 +33,11 @@ public class RefreshListViewProxy<D> extends RefreshPageProxy<D, RefreshListView
         return adapter == null ? false : adapter.isEmpty();
     }
 
-    public ListView getListView() {
+    public ListView getRefreshableView() {
         return listView;
     }
 
-    public BaseAdapter getAdapter() {
+    public RefreshBaseAdapter<D> getAdapter() {
         return adapter;
     }
 
@@ -60,25 +58,4 @@ public class RefreshListViewProxy<D> extends RefreshPageProxy<D, RefreshListView
         }
     }
 
-    public static abstract class BaseAdapter<D> extends android.widget.BaseAdapter {
-
-        private List<D> items;
-
-        public BaseAdapter() {
-        }
-
-        private void setItems(List<D> items) {
-            this.items = items;
-        }
-
-        @Override
-        public final int getCount() {
-            return items == null ? 0 : items.size();
-        }
-
-        @Override
-        public final D getItem(int position) {
-            return items.get(position);
-        }
-    }
 }

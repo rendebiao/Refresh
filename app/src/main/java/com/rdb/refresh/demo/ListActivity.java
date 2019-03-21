@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rdb.refresh.RefreshBaseAdapter;
 import com.rdb.refresh.RefreshListConfig;
 import com.rdb.refresh.RefreshListViewProxy;
 import com.rdb.refresh.RefreshTaskRequest;
@@ -49,7 +50,7 @@ public class ListActivity extends AppCompatActivity {
         RefreshListViewProxy<String> listViewProxy = new RefreshListViewProxy<String>(this, refreshListConfig, taskRequest, new Adapter());
         //设置界面
         setContentView(listViewProxy.getView());
-        ListView listView = listViewProxy.getListView();
+        ListView listView = listViewProxy.getRefreshableView();
         listView.setDivider(null);
         getSupportActionBar().setTitle("ListView");
         getSupportActionBar().setElevation(0);
@@ -58,7 +59,7 @@ public class ListActivity extends AppCompatActivity {
         listViewProxy.startRefreshingDelay(1000);
     }
 
-    class Adapter extends RefreshListViewProxy.BaseAdapter {
+    class Adapter extends RefreshBaseAdapter {
 
         private LayoutInflater inflater;
 
@@ -72,13 +73,14 @@ public class ListActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = inflater.inflate(R.layout.item_text_layout, parent, false);
-            }
+        public View onCreateItemView(ViewGroup parent, int viewType) {
+            return inflater.inflate(R.layout.item_text_layout, parent, false);
+        }
+
+        @Override
+        public void onUpdateItemView(View convertView, int position) {
             TextView textView = convertView.findViewById(R.id.textView);
             textView.setText("---" + getItem(position) + "---");
-            return convertView;
         }
 
         @Override

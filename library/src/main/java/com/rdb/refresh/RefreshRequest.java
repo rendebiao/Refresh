@@ -26,9 +26,9 @@ public abstract class RefreshRequest<D> {
         }
     }
 
-    public void notifyRequestFailure(RefreshRequest.ErrorType errorType) {
+    public void notifyRequestFailure(RefreshRequestError error) {
         if (refreshPageProxy != null) {
-            refreshPageProxy.onRequestFailure(errorType);
+            refreshPageProxy.onRequestFailure(error);
         }
     }
 
@@ -38,7 +38,4 @@ public abstract class RefreshRequest<D> {
         }
     }
 
-    public enum ErrorType {
-        CLIENT, NETWORK, SERVER
-    }
 }
