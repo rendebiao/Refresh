@@ -4,12 +4,12 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewStub;
 
-import com.rdb.refresh.view.RefreshContainer;
+import com.rdb.refresh.view.Container;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends RefreshProxy<V, RefreshListConfig> {
+public abstract class RefreshPageProxy<D, V extends Container> extends RefreshProxy<V, RefreshListConfig> {
 
     private View emptyView;
     private RefreshPage refreshPage;
@@ -36,11 +36,6 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
         }
     }
 
-    /**
-     * 初始化分页配置
-     *
-     * @return
-     */
     protected RefreshPage initRefreshPage() {
         return new RefreshPage(1, 10);
     }
@@ -68,25 +63,14 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
         }
     }
 
-    /**
-     * 请求开始
-     */
     protected void onRequestStart() {
 
     }
 
-    /**
-     * 请求取消
-     */
     protected void onRequestCancel() {
 
     }
 
-    /**
-     * 请求成功 传入数据
-     *
-     * @param result
-     */
     protected final void onRequestSuccess(List<D> result) {
         if (refreshPage.curPage == 1) {
             dataList.clear();//清空以前的数据
@@ -101,22 +85,11 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
         updateEmptyView(null);
     }
 
-    /**
-     * 处理请求数据
-     *
-     * @param dataList
-     * @param result
-     * @param refreshPage
-     * @return
-     */
     protected boolean onUpdateResult(List<D> dataList, List<D> result, RefreshPage refreshPage) {
         dataList.addAll(result);
         return result.size() >= refreshPage.rowCount;
     }
 
-    /**
-     * 请求失败
-     */
     protected void onRequestFailure(RefreshRequestError error) {
         refreshContainer.notifyComplete();
         updateEmptyView(error);
@@ -145,10 +118,6 @@ public abstract class RefreshPageProxy<D, V extends RefreshContainer> extends Re
 
     public final ArrayList<D> getDataList() {
         return dataList;
-    }
-
-    public final int getRowCount() {
-        return refreshPage.rowCount;
     }
 
     public final int getCurPage() {

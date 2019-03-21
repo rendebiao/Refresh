@@ -7,21 +7,18 @@ import android.widget.GridView;
 
 import com.rdb.refresh.Refresh;
 
-public class RefreshGridViewContainer extends RefreshAbsListViewContainer<GridView> {
+public class GridViewContainer extends AbsListViewContainer<GridView> {
 
-    public RefreshGridViewContainer(Context context) {
+    public GridViewContainer(Context context) {
         super(context);
-        setRefreshLoadController(Refresh.getGridLoadController());
     }
 
-    public RefreshGridViewContainer(Context context, AttributeSet attrs) {
+    public GridViewContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setRefreshLoadController(Refresh.getGridLoadController());
     }
 
-    public RefreshGridViewContainer(Context context, GridView refreshableView) {
+    public GridViewContainer(Context context, GridView refreshableView) {
         super(context, refreshableView);
-        setRefreshLoadController(Refresh.getGridLoadController());
     }
 
     @Override
@@ -39,5 +36,10 @@ public class RefreshGridViewContainer extends RefreshAbsListViewContainer<GridVi
     @Override
     protected GridView createRefreshableView() {
         return new GridView(getContext());
+    }
+
+    @Override
+    protected LoadController initLoadController() {
+        return Refresh.getGridLoadController();
     }
 }

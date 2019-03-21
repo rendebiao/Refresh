@@ -9,14 +9,12 @@ import android.widget.WrapperListAdapter;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RefreshAbsListViewController extends RefreshController {
+public class AbsListViewController<T extends AbsListView> extends RefreshController<T> {
 
-    private AbsListView listView;
     private AbsListScrollListener absListScrollListener = new AbsListScrollListener();
 
-    public RefreshAbsListViewController(AbsListView listView) {
-        this.listView = listView;
-        listView.setOnScrollListener(absListScrollListener);
+    public AbsListViewController() {
+        super();
         absListScrollListener.addOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -30,6 +28,17 @@ public class RefreshAbsListViewController extends RefreshController {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onRefreshableViewChanged(T oldView, T newView) {
+        super.onRefreshableViewChanged(oldView, newView);
+        if (oldView != null) {
+            oldView.setOnScrollListener(null);
+        }
+        if (newView != null) {
+            newView.setOnScrollListener(absListScrollListener);
+        }
     }
 
     public final void setOnScrollListener(AbsListView.OnScrollListener listener) {
@@ -56,15 +65,15 @@ public class RefreshAbsListViewController extends RefreshController {
 
     @Override
     public boolean isReadyForLoading() {
-        if (listView != null && listView.getAdapter() != null && listView.getAdapter().getCount() > 0) {
-            if (listView.getLastVisiblePosition() == (listView.getAdapter().getCount() - 1)) {
-                View item = listView.getChildAt(listView.getChildCount() - 1);
+        if (refreshableView != null && refreshableView.getAdapter() != null && refreshableView.getAdapter().getCount() > 0) {
+            if (refreshableView.getLastVisiblePosition() == (refreshableView.getAdapter().getCount() - 1)) {
+                View item = refreshableView.getChildAt(refreshableView.getChildCount() - 1);
                 if (item != null) {
                     int[] itemLocation = new int[2];
                     int[] listLocation = new int[2];
                     item.getLocationOnScreen(itemLocation);
-                    listView.getLocationOnScreen(listLocation);
-                    return itemLocation[1] <= listLocation[1] + listView.getHeight() - listView.getPaddingBottom();
+                    refreshableView.getLocationOnScreen(listLocation);
+                    return itemLocation[1] <= listLocation[1] + refreshableView.getHeight() - refreshableView.getPaddingBottom();
                 }
             }
         }
@@ -73,18 +82,18 @@ public class RefreshAbsListViewController extends RefreshController {
 
     @Override
     protected void onHasMoreChanged(boolean hasMore) {
-        ListAdapter adapter = listView.getAdapter();
+        ListAdapter adapter = refreshableView.getAdapter();
         while (adapter instanceof WrapperListAdapter) {
             adapter = ((WrapperListAdapter) adapter).getWrappedAdapter();
         }
-        if (adapter instanceof RefreshAbsListViewAdapter) {
-            ((RefreshAbsListViewAdapter) adapter).setShowLoad(hasMore);
+        if (adapter instanceof AbsListViewWrapperAdapter) {
+            ((AbsListViewWrapperAdapter) adapter).setShowLoad(hasMore);
         }
     }
 
     @Override
     public void onLoadingChanged(boolean loading) {
-        ListAdapter adapter = listView.getAdapter();
+        ListAdapter adapter = refreshableView.getAdapter();
         while (adapter instanceof WrapperListAdapter) {
             adapter = ((WrapperListAdapter) adapter).getWrappedAdapter();
         }
@@ -94,9 +103,9 @@ public class RefreshAbsListViewController extends RefreshController {
     }
 
     private boolean isScrollTop() {
-        if (listView.getChildCount() > 0) {
-            return listView.getFirstVisiblePosition() == 0
-                    && listView.getChildAt(0).getTop() == listView.getPaddingTop();
+        if (refreshableView.getChildCount() > 0) {
+            return refreshableView.getFirstVisiblePosition() == 0
+                    && refreshableView.getChildAt(0).getTop() == refreshableView.getPaddingTop();
         }
         return true;
     }

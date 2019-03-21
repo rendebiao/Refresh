@@ -22,48 +22,52 @@
             android:text="ScrollView" />
 
         <Button
-            android:id="@+id/listButton"
+            android:id="@+id/listButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ListView" />
+            android:text="ListView控件" />
 
         <Button
-            android:id="@+id/gridButton"
+            android:id="@+id/listButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GridView" />
+            android:text="ListView框架" />
 
         <Button
-            android:id="@+id/recyclerButton"
+            android:id="@+id/gridButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RecyclerView" />
+            android:text="GridView控件" />
 
         <Button
-            android:id="@+id/expandableButton"
+            android:id="@+id/gridButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ExpandableListView" />
+            android:text="GridView框架" />
 
-        <TextView
+        <Button
+            android:id="@+id/recyclerButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="控件：
-        \n    1.RefreshViewContainer -> View
-        \n    2.RefreshListViewContainerr -> ListView
-        \n    3.RefreshGridViewContainerr -> GridView
-        \n    4.RefreshExpandableListViewContainerr -> ExpandableListView
-        \n    5.RefreshRecyclerViewContainerr -> RecyclerView
-        \n实现步骤：
-        \n    1.控件2345通过setDefaultRefreshLoadController设置默认Load控制器，也可为每个控件单独设置，见第4步。
-        \n    2.布局引用RefreshContainer的实现类，可嵌入对应子控件，如未嵌入，自动创建。
-        \n    3.调用setMode()设置刷新模式
-        \n    4.控件2345调用setRefreshLoadController()单独设置控制器，如已设置步骤1，可无需此步。
-        \n    5.控件2345调用setAdapter() 此前必须确保步骤1或4已设置，注意不能设置给子控件。
-        \n    6.调用setOnRefreshListener/setOnLoadListener监听回调
-        \n    7.调用startRefreshing/startLoading主动触发控件"
-            android:textSize="12dp" />
+            android:text="RecyclerView控件" />
+
+        <Button
+            android:id="@+id/recyclerButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RecyclerView框架" />
+
+        <Button
+            android:id="@+id/expandableButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ExpandableListView控件" />
+
+        <Button
+            android:id="@+id/expandableButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ExpandableListView框架" />
 
     </LinearLayout>
 </ScrollView>

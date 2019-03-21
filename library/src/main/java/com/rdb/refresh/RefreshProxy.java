@@ -5,9 +5,9 @@ import android.support.annotation.IdRes;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.rdb.refresh.view.RefreshContainer;
+import com.rdb.refresh.view.Container;
 
-public abstract class RefreshProxy<V extends RefreshContainer, C extends RefreshConfig> {
+public abstract class RefreshProxy<V extends Container, C extends RefreshConfig> {
 
     private View view;
     protected Context context;
@@ -28,7 +28,7 @@ public abstract class RefreshProxy<V extends RefreshContainer, C extends Refresh
         }
         refreshContainer.setMode(refreshConfig.refreshMode);
         if (refreshContainer.isTopEnable()) {
-            refreshContainer.setOnRefreshListener(new RefreshContainer.OnRefreshListener() {
+            refreshContainer.setOnRefreshListener(new Container.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
                     doRefresh();
@@ -36,7 +36,7 @@ public abstract class RefreshProxy<V extends RefreshContainer, C extends Refresh
             });
         }
         if (refreshContainer.isBottomEnable()) {
-            refreshContainer.setOnLoadListener(new RefreshContainer.OnLoadListener() {
+            refreshContainer.setOnLoadListener(new Container.OnLoadListener() {
                 @Override
                 public void onLoad() {
                     doLoad();

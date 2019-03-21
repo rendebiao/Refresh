@@ -11,15 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rdb.refresh.view.RefreshContainer;
+import com.rdb.refresh.view.Container;
+import com.rdb.refresh.view.RecyclerViewContainer;
 import com.rdb.refresh.view.RefreshLayout;
-import com.rdb.refresh.view.RefreshRecyclerViewContainer;
 
-public class RecyclerActivity extends AppCompatActivity {
+public class RefreshRecyclerActivity extends AppCompatActivity {
 
     private int count;
     private Adapter adapter;
-    private RefreshRecyclerViewContainer refreshContainer;
+    private RecyclerViewContainer refreshContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class RecyclerActivity extends AppCompatActivity {
         refreshContainer = findViewById(R.id.refreshContainer);
         adapter = new Adapter(getLayoutInflater());
         refreshContainer.setMode(RefreshLayout.BOTH);
-        refreshContainer.setLayoutManager(new LinearLayoutManager(this));
+        refreshContainer.getRefreshableView().setLayoutManager(new LinearLayoutManager(this));
         refreshContainer.setAdapter(adapter);
         refreshContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -39,7 +39,7 @@ public class RecyclerActivity extends AppCompatActivity {
                 load();
             }
         });
-        refreshContainer.setOnLoadListener(new RefreshContainer.OnLoadListener() {
+        refreshContainer.setOnLoadListener(new Container.OnLoadListener() {
             @Override
             public void onLoad() {
                 load();

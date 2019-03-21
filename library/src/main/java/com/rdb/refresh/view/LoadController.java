@@ -2,11 +2,11 @@ package com.rdb.refresh.view;
 
 import android.view.View;
 
-public class RefreshLoadController {
+public class LoadController {
 
     private int loadLayout;
 
-    public RefreshLoadController(int loadLayout) {
+    public LoadController(int loadLayout) {
         this.loadLayout = loadLayout;
     }
 

@@ -3,12 +3,10 @@ package com.rdb.refresh.view;
 import android.view.View;
 import android.widget.ScrollView;
 
-public class RefreshViewController extends RefreshController {
+public class ViewController extends RefreshController<View> {
 
-    private View view;
-
-    public RefreshViewController(View view) {
-        this.view = view;
+    public ViewController() {
+        super();
     }
 
     @Override
@@ -18,8 +16,8 @@ public class RefreshViewController extends RefreshController {
 
     @Override
     protected boolean canChildScrollUp() {
-        if (view instanceof ScrollView) {
-            ScrollView scrollView = (ScrollView) view;
+        if (refreshableView instanceof ScrollView) {
+            ScrollView scrollView = (ScrollView) refreshableView;
             return scrollView.getScrollY() > 0;
         }
         return false;

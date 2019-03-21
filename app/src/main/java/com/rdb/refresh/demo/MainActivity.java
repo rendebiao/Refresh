@@ -8,7 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.rdb.refresh.Refresh;
-import com.rdb.refresh.view.RefreshLoadController;
+import com.rdb.refresh.view.LoadController;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -20,11 +20,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setElevation(0);
         findViewById(R.id.viewButton).setOnClickListener(this);
         findViewById(R.id.scrollButton).setOnClickListener(this);
-        findViewById(R.id.listButton).setOnClickListener(this);
-        findViewById(R.id.gridButton).setOnClickListener(this);
-        findViewById(R.id.recyclerButton).setOnClickListener(this);
-        findViewById(R.id.expandableButton).setOnClickListener(this);
-        RefreshLoadController defaultControoler = new RefreshLoadController(R.layout.item_load_layout) {
+        findViewById(R.id.listButton1).setOnClickListener(this);
+        findViewById(R.id.listButton2).setOnClickListener(this);
+        findViewById(R.id.gridButton1).setOnClickListener(this);
+        findViewById(R.id.gridButton2).setOnClickListener(this);
+        findViewById(R.id.recyclerButton1).setOnClickListener(this);
+        findViewById(R.id.recyclerButton2).setOnClickListener(this);
+        findViewById(R.id.expandableButton1).setOnClickListener(this);
+        findViewById(R.id.expandableButton2).setOnClickListener(this);
+        LoadController defaultControoler = new LoadController(R.layout.item_load_layout) {
 
             @Override
             public void updateLoadView(View view, boolean loading) {
@@ -46,17 +50,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (v.getId() == R.id.scrollButton) {
             Intent intent = new Intent(this, ScrollActivity.class);
             startActivity(intent);
-        } else if (v.getId() == R.id.listButton) {
-            Intent intent = new Intent(this, ListActivity.class);
+        } else if (v.getId() == R.id.listButton1) {
+            Intent intent = new Intent(this, RefreshListActivity.class);
             startActivity(intent);
-        } else if (v.getId() == R.id.gridButton) {
-            Intent intent = new Intent(this, GridActivity.class);
+        } else if (v.getId() == R.id.listButton2) {
+            Intent intent = new Intent(this, RefreshListPageActivity.class);
             startActivity(intent);
-        } else if (v.getId() == R.id.recyclerButton) {
-            Intent intent = new Intent(this, RecyclerActivity.class);
+        } else if (v.getId() == R.id.gridButton1) {
+            Intent intent = new Intent(this, RefreshGridActivity.class);
             startActivity(intent);
-        } else if (v.getId() == R.id.expandableButton) {
-            Intent intent = new Intent(this, ExpandableListActivity.class);
+        } else if (v.getId() == R.id.gridButton2) {
+            Intent intent = new Intent(this, RefreshGridPageActivity.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.recyclerButton1) {
+            Intent intent = new Intent(this, RefreshRecyclerActivity.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.recyclerButton2) {
+            Intent intent = new Intent(this, RefreshRecyclerPageActivity.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.expandableButton1) {
+            Intent intent = new Intent(this, RefreshExpandableListActivity.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.expandableButton2) {
+            Intent intent = new Intent(this, RefreshExpandableListPageActivity.class);
             startActivity(intent);
         }
     }

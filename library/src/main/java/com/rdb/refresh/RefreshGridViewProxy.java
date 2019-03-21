@@ -3,9 +3,9 @@ package com.rdb.refresh;
 import android.content.Context;
 import android.widget.GridView;
 
-import com.rdb.refresh.view.RefreshGridViewContainer;
+import com.rdb.refresh.view.GridViewContainer;
 
-public class RefreshGridViewProxy<D> extends RefreshPageProxy<D, RefreshGridViewContainer> {
+public class RefreshGridViewProxy<D> extends RefreshPageProxy<D, GridViewContainer> {
 
     protected GridView gridView;
     protected RefreshBaseAdapter<D> adapter;
@@ -19,8 +19,8 @@ public class RefreshGridViewProxy<D> extends RefreshPageProxy<D, RefreshGridView
     }
 
     @Override
-    protected RefreshGridViewContainer createRefreshContainer(Context context) {
-        return new RefreshGridViewContainer(context);
+    protected GridViewContainer createRefreshContainer(Context context) {
+        return new GridViewContainer(context);
     }
 
     public final void notifyDataSetChanged() {

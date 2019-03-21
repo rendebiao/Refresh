@@ -7,21 +7,18 @@ import android.widget.ListView;
 
 import com.rdb.refresh.Refresh;
 
-public class RefreshListViewContainer extends RefreshAbsListViewContainer<ListView> {
+public class ListViewContainer extends AbsListViewContainer<ListView> {
 
-    public RefreshListViewContainer(Context context) {
+    public ListViewContainer(Context context) {
         super(context);
-        setRefreshLoadController(Refresh.getListLoadController());
     }
 
-    public RefreshListViewContainer(Context context, AttributeSet attrs) {
+    public ListViewContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setRefreshLoadController(Refresh.getListLoadController());
     }
 
-    public RefreshListViewContainer(Context context, ListView refreshableView) {
+    public ListViewContainer(Context context, ListView refreshableView) {
         super(context, refreshableView);
-        setRefreshLoadController(Refresh.getListLoadController());
     }
 
     @Override
@@ -39,5 +36,10 @@ public class RefreshListViewContainer extends RefreshAbsListViewContainer<ListVi
     @Override
     protected ListView createRefreshableView() {
         return new ListView(getContext());
+    }
+
+    @Override
+    protected LoadController initLoadController() {
+        return Refresh.getListLoadController();
     }
 }

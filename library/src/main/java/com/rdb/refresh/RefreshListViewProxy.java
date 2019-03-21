@@ -3,9 +3,9 @@ package com.rdb.refresh;
 import android.content.Context;
 import android.widget.ListView;
 
-import com.rdb.refresh.view.RefreshListViewContainer;
+import com.rdb.refresh.view.ListViewContainer;
 
-public class RefreshListViewProxy<D> extends RefreshPageProxy<D, RefreshListViewContainer> {
+public class RefreshListViewProxy<D> extends RefreshPageProxy<D, ListViewContainer> {
 
     protected ListView listView;
     protected RefreshBaseAdapter<D> adapter;
@@ -19,8 +19,8 @@ public class RefreshListViewProxy<D> extends RefreshPageProxy<D, RefreshListView
     }
 
     @Override
-    protected RefreshListViewContainer createRefreshContainer(Context context) {
-        return new RefreshListViewContainer(context);
+    protected ListViewContainer createRefreshContainer(Context context) {
+        return new ListViewContainer(context);
     }
 
     public final void notifyDataSetChanged() {

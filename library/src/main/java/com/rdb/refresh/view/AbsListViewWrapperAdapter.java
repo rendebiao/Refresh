@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-class RefreshAbsListViewAdapter extends BaseAdapter {
+class AbsListViewWrapperAdapter extends BaseAdapter {
 
     private boolean showLoad;
     private BaseAdapter adapter;
-    private RefreshLoadController loadController;
-    private RefreshAbsListViewContainer listContainer;
+    private LoadController loadController;
+    private AbsListViewContainer listContainer;
     private DataSetObserver dataObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -29,7 +29,7 @@ class RefreshAbsListViewAdapter extends BaseAdapter {
         }
     };
 
-    public RefreshAbsListViewAdapter(RefreshLoadController loadController, RefreshAbsListViewContainer listContainer, BaseAdapter adapter) {
+    public AbsListViewWrapperAdapter(LoadController loadController, AbsListViewContainer listContainer, BaseAdapter adapter) {
         this.loadController = loadController;
         this.listContainer = listContainer;
         setAdapter(adapter);

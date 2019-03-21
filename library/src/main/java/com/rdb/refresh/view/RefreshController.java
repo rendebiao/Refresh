@@ -1,8 +1,24 @@
 package com.rdb.refresh.view;
 
-public abstract class RefreshController {
+import android.view.View;
 
-    protected RefreshContainer container;
+public abstract class RefreshController<T extends View> {
+
+    protected T refreshableView;
+    protected Container container;
+
+    public RefreshController() {
+    }
+
+    void init(Container container, T refreshableView) {
+        this.container = container;
+        onRefreshableViewChanged(this.refreshableView, refreshableView);
+        this.refreshableView = refreshableView;
+    }
+
+    protected void onRefreshableViewChanged(T oldView, T newView) {
+
+    }
 
     protected abstract boolean supportLoad();
 

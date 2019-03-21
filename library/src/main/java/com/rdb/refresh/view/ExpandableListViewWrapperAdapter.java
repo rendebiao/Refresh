@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
-class RefreshExpandableListViewAdapter extends BaseExpandableListAdapter {
+class ExpandableListViewWrapperAdapter extends BaseExpandableListAdapter {
 
     private boolean showLoad;
-    private RefreshLoadController loadController;
+    private LoadController loadController;
     private BaseExpandableListAdapter adapter;
-    private RefreshExpandableListViewContainer expandableListContainer;
+    private ExpandableListViewContainer expandableListContainer;
     private DataSetObserver dataObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -26,7 +26,7 @@ class RefreshExpandableListViewAdapter extends BaseExpandableListAdapter {
         }
     };
 
-    public RefreshExpandableListViewAdapter(RefreshLoadController loadController, RefreshExpandableListViewContainer expandableListContainer, BaseExpandableListAdapter adapter) {
+    public ExpandableListViewWrapperAdapter(LoadController loadController, ExpandableListViewContainer expandableListContainer, BaseExpandableListAdapter adapter) {
         this.loadController = loadController;
         this.expandableListContainer = expandableListContainer;
         setAdapter(adapter);

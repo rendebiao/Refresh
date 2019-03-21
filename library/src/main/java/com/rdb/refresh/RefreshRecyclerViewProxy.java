@@ -3,9 +3,9 @@ package com.rdb.refresh;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.rdb.refresh.view.RefreshRecyclerViewContainer;
+import com.rdb.refresh.view.RecyclerViewContainer;
 
-public class RefreshRecyclerViewProxy<D> extends RefreshPageProxy<D, RefreshRecyclerViewContainer> {
+public class RefreshRecyclerViewProxy<D> extends RefreshPageProxy<D, RecyclerViewContainer> {
 
     protected RecyclerView recyclerView;
     protected RefreshBaseRecyclerAdapter<D> adapter;
@@ -19,8 +19,8 @@ public class RefreshRecyclerViewProxy<D> extends RefreshPageProxy<D, RefreshRecy
     }
 
     @Override
-    protected RefreshRecyclerViewContainer createRefreshContainer(Context context) {
-        return new RefreshRecyclerViewContainer(context);
+    protected RecyclerViewContainer createRefreshContainer(Context context) {
+        return new RecyclerViewContainer(context);
     }
 
     @Override

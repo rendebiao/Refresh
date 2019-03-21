@@ -5,11 +5,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import com.rdb.refresh.view.RefreshLayout;
-import com.rdb.refresh.view.RefreshViewContainer;
+import com.rdb.refresh.view.ViewContainer;
 
 public class ScrollActivity extends AppCompatActivity {
 
-    private RefreshViewContainer refreshContainer;
+    private ViewContainer refreshContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

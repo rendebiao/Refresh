@@ -4,9 +4,9 @@ import android.content.Context;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 
-import com.rdb.refresh.view.RefreshExpandableListViewContainer;
+import com.rdb.refresh.view.ExpandableListViewContainer;
 
-public class RefreshExpandableListViewProxy<D> extends RefreshPageProxy<D, RefreshExpandableListViewContainer> {
+public class RefreshExpandableListViewProxy<D> extends RefreshPageProxy<D, ExpandableListViewContainer> {
 
     protected ExpandableListView listView;
     protected RefreshBaseExpandableListAdapter<D> adapter;
@@ -20,8 +20,8 @@ public class RefreshExpandableListViewProxy<D> extends RefreshPageProxy<D, Refre
     }
 
     @Override
-    protected RefreshExpandableListViewContainer createRefreshContainer(Context context) {
-        return new RefreshExpandableListViewContainer(context);
+    protected ExpandableListViewContainer createRefreshContainer(Context context) {
+        return new ExpandableListViewContainer(context);
     }
 
     public final void notifyDataSetChanged() {

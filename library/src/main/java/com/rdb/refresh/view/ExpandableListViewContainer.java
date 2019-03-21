@@ -9,21 +9,20 @@ import android.widget.ExpandableListView;
 
 import com.rdb.refresh.Refresh;
 
-public class RefreshExpandableListViewContainer extends RefreshContainer<ExpandableListView> {
+public class ExpandableListViewContainer extends Container<ExpandableListView> {
 
-    public RefreshExpandableListViewContainer(Context context) {
+    private BaseExpandableListAdapter adapter;
+
+    public ExpandableListViewContainer(Context context) {
         super(context);
-        setRefreshLoadController(Refresh.getExpandableListLoadController());
     }
 
-    public RefreshExpandableListViewContainer(Context context, AttributeSet attrs) {
+    public ExpandableListViewContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setRefreshLoadController(Refresh.getExpandableListLoadController());
     }
 
-    public RefreshExpandableListViewContainer(Context context, ExpandableListView refreshableView) {
+    public ExpandableListViewContainer(Context context, ExpandableListView refreshableView) {
         super(context, refreshableView);
-        setRefreshLoadController(Refresh.getExpandableListLoadController());
     }
 
     @Override
@@ -44,20 +43,34 @@ public class RefreshExpandableListViewContainer extends RefreshContainer<Expanda
     }
 
     @Override
-    public void setRefreshableView(ExpandableListView view) {
-        super.setRefreshableView(view);
-        setRefreshController(new RefreshExpandableListViewController(view));
+    protected LoadController initLoadController() {
+        return Refresh.getExpandableListLoadController();
+    }
+
+    @Override
+    protected RefreshController initRefreshController() {
+        return new ExpandableListViewController();
+    }
+
+    @Override
+    protected void onLoadControllerChanged() {
+        updateAdapterInner();
     }
 
     public void setAdapter(BaseExpandableListAdapter adapter) {
+        this.adapter = adapter;
+        updateAdapterInner();
+    }
+
+    private void updateAdapterInner() {
         if (adapter == null) {
             refreshableView.setAdapter((ExpandableListAdapter) null);
         } else {
             if (loadController == null) {
-                throw new RuntimeException("unset RefreshLoadController");
+                throw new RuntimeException("unset LoadController");
             } else {
-                RefreshExpandableListViewAdapter refreshExpandableListViewAdapter = new RefreshExpandableListViewAdapter(loadController, this, adapter);
-                refreshableView.setAdapter(refreshExpandableListViewAdapter);
+                ExpandableListViewWrapperAdapter expandableListViewWrapperAdapter = new ExpandableListViewWrapperAdapter(loadController, this, adapter);
+                refreshableView.setAdapter(expandableListViewWrapperAdapter);
             }
         }
     }

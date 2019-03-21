@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
-public abstract class RefreshContainer<T extends View> extends RefreshLayout {
+public abstract class Container<T extends View> extends RefreshLayout {
 
     protected T refreshableView;
     protected RefreshController refreshController;
-    protected RefreshLoadController loadController;
+    protected LoadController loadController;
     private int downY;
     private int lastY;
     private int distanceY;
@@ -25,16 +25,16 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     private OnLoadListener loadListener;
     private OnRefreshListener refreshListener;
 
-    public RefreshContainer(Context context) {
+    public Container(Context context) {
         this(context, (T) null);
     }
 
-    public RefreshContainer(Context context, AttributeSet attrs) {
+    public Container(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public RefreshContainer(Context context, T refreshableView) {
+    public Container(Context context, T refreshableView) {
         super(context);
         init(context);
         if (refreshableView == null) {
@@ -55,6 +55,8 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
                 }
             }
         });
+        setRefreshLoadController(initLoadController());
+        setRefreshController(initRefreshController());
     }
 
     @Override
@@ -76,17 +78,25 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         setEnabled(mode != NONE);
     }
 
-    public void setRefreshLoadController(RefreshLoadController loadController) {
-        if (loadController != null) {
-            this.loadController = loadController;
-            autoLoad = loadController.autoLoad();
+    public void setRefreshLoadController(LoadController loadController) {
+        boolean changed = this.loadController != null;
+        this.loadController = loadController;
+        autoLoad = loadController == null ? false : loadController.autoLoad();
+        if (changed) {
+            onLoadControllerChanged();
         }
     }
+
+    protected abstract LoadController initLoadController();
+
+    protected abstract RefreshController<T> initRefreshController();
+
+    protected abstract void onLoadControllerChanged();
 
     protected void setRefreshController(RefreshController refreshController) {
         this.refreshController = refreshController;
         if (refreshController != null) {
-            refreshController.container = this;
+            refreshController.init(this, refreshableView);
         }
     }
 
@@ -177,6 +187,7 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     }
 
     public void setRefreshableView(T view) {
+        refreshController.init(this, view);
         if (refreshableView != null) {
             removeView(refreshableView);
         }

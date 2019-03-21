@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-class RefreshRecyclerViewAdapter extends RecyclerView.Adapter<RefreshRecyclerViewAdapter.RefreshItemHolder> {
+class RecyclerViewWrapperAdapter extends RecyclerView.Adapter<RecyclerViewWrapperAdapter.RefreshItemHolder> {
 
     private static final int LOAD_TYPE_ID = Integer.MIN_VALUE;
 
     private boolean showLoad;
     private RecyclerView.Adapter adapter;
-    private RefreshLoadController loadController;
-    private RefreshRecyclerViewContainer recyclerContainer;
+    private LoadController loadController;
+    private RecyclerViewContainer recyclerContainer;
     private RecyclerView.AdapterDataObserver dataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
@@ -55,7 +55,7 @@ class RefreshRecyclerViewAdapter extends RecyclerView.Adapter<RefreshRecyclerVie
         }
     };
 
-    public RefreshRecyclerViewAdapter(RefreshLoadController loadController, RefreshRecyclerViewContainer recyclerContainer, RecyclerView.Adapter adapter) {
+    public RecyclerViewWrapperAdapter(LoadController loadController, RecyclerViewContainer recyclerContainer, RecyclerView.Adapter adapter) {
         this.loadController = loadController;
         this.recyclerContainer = recyclerContainer;
         setAdapter(adapter);
