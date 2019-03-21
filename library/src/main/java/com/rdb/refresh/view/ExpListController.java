@@ -4,18 +4,20 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
-public class ExpandableListController extends AbsListController<ExpandableListView> {
+public class ExpListController extends AbsListController<ExpandableListView> {
 
 
-    public ExpandableListController() {
+    public ExpListController() {
         super();
     }
 
     @Override
     protected void onHasMoreChanged(boolean hasMore) {
-        ExpandableListAdapter adapter = refreshableView.getExpandableListAdapter();
-        if (adapter instanceof ExpandableListWrapperAdapter) {
-            ((ExpandableListWrapperAdapter) adapter).setShowLoad(hasMore);
+        if (!container.isShowNoMore()) {
+            ExpandableListAdapter adapter = refreshableView.getExpandableListAdapter();
+            if (adapter instanceof ExpListAdapter) {
+                ((ExpListAdapter) adapter).setShowLoad(hasMore);
+            }
         }
     }
 

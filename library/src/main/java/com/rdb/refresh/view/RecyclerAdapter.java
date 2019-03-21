@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-class RecyclerWrapperAdapter extends RecyclerView.Adapter<RecyclerWrapperAdapter.RefreshItemHolder> {
+class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RefreshItemHolder> {
 
     private static final int LOAD_TYPE_ID = Integer.MIN_VALUE;
 
@@ -55,9 +55,10 @@ class RecyclerWrapperAdapter extends RecyclerView.Adapter<RecyclerWrapperAdapter
         }
     };
 
-    public RecyclerWrapperAdapter(LoadController loadController, RecyclerContainer recyclerContainer, RecyclerView.Adapter adapter) {
+    public RecyclerAdapter(LoadController loadController, RecyclerContainer recyclerContainer, RecyclerView.Adapter adapter) {
         this.loadController = loadController;
         this.recyclerContainer = recyclerContainer;
+        this.showLoad = recyclerContainer.isShowNoMore();
         setAdapter(adapter);
     }
 
@@ -98,7 +99,7 @@ class RecyclerWrapperAdapter extends RecyclerView.Adapter<RecyclerWrapperAdapter
     @Override
     public void onBindViewHolder(@NonNull RefreshItemHolder refreshItemHolder, int position) {
         if (isLoadItem(position)) {
-            loadController.updateLoadView(refreshItemHolder.itemView, recyclerContainer.isLoading());
+            loadController.updateLoadView(refreshItemHolder.itemView, recyclerContainer.isLoading(), recyclerContainer.isHasMore());
         } else {
             adapter.onBindViewHolder(refreshItemHolder.viewHolder, position);
         }
@@ -106,7 +107,8 @@ class RecyclerWrapperAdapter extends RecyclerView.Adapter<RecyclerWrapperAdapter
 
     @Override
     public int getItemCount() {
-        return adapter.getItemCount() + (showLoad ? 1 : 0);
+        int count = adapter.getItemCount();
+        return count == 0 ? 0 : count + (showLoad ? 1 : 0);
     }
 
     @Override

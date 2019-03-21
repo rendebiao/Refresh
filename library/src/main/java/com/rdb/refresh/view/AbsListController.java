@@ -82,12 +82,14 @@ public class AbsListController<T extends AbsListView> extends RefreshController<
 
     @Override
     protected void onHasMoreChanged(boolean hasMore) {
-        ListAdapter adapter = refreshableView.getAdapter();
-        while (adapter instanceof WrapperListAdapter) {
-            adapter = ((WrapperListAdapter) adapter).getWrappedAdapter();
-        }
-        if (adapter instanceof AbsListWrapperAdapter) {
-            ((AbsListWrapperAdapter) adapter).setShowLoad(hasMore);
+        if (!container.isShowNoMore()) {
+            ListAdapter adapter = refreshableView.getAdapter();
+            while (adapter instanceof WrapperListAdapter) {
+                adapter = ((WrapperListAdapter) adapter).getWrappedAdapter();
+            }
+            if (adapter instanceof AbsListAdapter) {
+                ((AbsListAdapter) adapter).setShowLoad(hasMore);
+            }
         }
     }
 

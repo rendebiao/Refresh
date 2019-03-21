@@ -9,19 +9,19 @@ import android.widget.ExpandableListView;
 
 import com.rdb.refresh.Refresh;
 
-public class ExpandableListContainer extends RefreshContainer<ExpandableListView> {
+public class ExpListContainer extends RefreshContainer<ExpandableListView> {
 
     private BaseExpandableListAdapter adapter;
 
-    public ExpandableListContainer(Context context) {
+    public ExpListContainer(Context context) {
         super(context);
     }
 
-    public ExpandableListContainer(Context context, AttributeSet attrs) {
+    public ExpListContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ExpandableListContainer(Context context, ExpandableListView refreshableView) {
+    public ExpListContainer(Context context, ExpandableListView refreshableView) {
         super(context, refreshableView);
     }
 
@@ -49,7 +49,7 @@ public class ExpandableListContainer extends RefreshContainer<ExpandableListView
 
     @Override
     protected RefreshController initRefreshController() {
-        return new ExpandableListController();
+        return new ExpListController();
     }
 
     @Override
@@ -69,8 +69,8 @@ public class ExpandableListContainer extends RefreshContainer<ExpandableListView
             if (loadController == null) {
                 throw new RuntimeException("unset LoadController");
             } else {
-                ExpandableListWrapperAdapter expandableListWrapperAdapter = new ExpandableListWrapperAdapter(loadController, this, adapter);
-                refreshableView.setAdapter(expandableListWrapperAdapter);
+                ExpListAdapter expListAdapter = new ExpListAdapter(loadController, this, adapter);
+                refreshableView.setAdapter(expListAdapter);
             }
         }
     }

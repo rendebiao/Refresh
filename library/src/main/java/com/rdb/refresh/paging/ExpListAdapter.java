@@ -5,11 +5,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-public abstract class BaseExpandableListAdapter<D> extends android.widget.BaseExpandableListAdapter {
+public abstract class ExpListAdapter<D> extends android.widget.BaseExpandableListAdapter {
 
     private List<D> items;
 
-    public BaseExpandableListAdapter() {
+    public ExpListAdapter() {
     }
 
     void setItems(List<D> items) {

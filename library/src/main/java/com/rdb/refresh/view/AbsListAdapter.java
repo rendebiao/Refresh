@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-class AbsListWrapperAdapter extends BaseAdapter {
+class AbsListAdapter extends BaseAdapter {
 
     private boolean showLoad;
     private BaseAdapter adapter;
@@ -29,9 +29,10 @@ class AbsListWrapperAdapter extends BaseAdapter {
         }
     };
 
-    public AbsListWrapperAdapter(LoadController loadController, AbsListContainer listContainer, BaseAdapter adapter) {
+    public AbsListAdapter(LoadController loadController, AbsListContainer listContainer, BaseAdapter adapter) {
         this.loadController = loadController;
         this.listContainer = listContainer;
+        this.showLoad = listContainer.isShowNoMore();
         setAdapter(adapter);
     }
 
@@ -54,7 +55,8 @@ class AbsListWrapperAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return adapter.getCount() + (showLoad ? 1 : 0);
+        int count = adapter.getCount();
+        return count == 0 ? 0 : count + (showLoad ? 1 : 0);
     }
 
 
@@ -88,7 +90,7 @@ class AbsListWrapperAdapter extends BaseAdapter {
                 convertView = LayoutInflater.from(listContainer.getContext()).inflate(loadController.getLoadLayout(), parent, false);
                 loadController.initLoadView(convertView);
             }
-            loadController.updateLoadView(convertView, listContainer.isLoading());
+            loadController.updateLoadView(convertView, listContainer.isLoading(), listContainer.isHasMore());
             return convertView;
         } else {
             return adapter.getView(position, convertView, parent);

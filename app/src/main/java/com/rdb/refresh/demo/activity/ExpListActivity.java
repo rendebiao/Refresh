@@ -10,21 +10,21 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.rdb.refresh.demo.R;
-import com.rdb.refresh.view.ExpandableListContainer;
+import com.rdb.refresh.view.ExpListContainer;
 import com.rdb.refresh.view.RefreshContainer;
 import com.rdb.refresh.view.RefreshLayout;
 
-public class ExpandableListActivity extends AppCompatActivity {
+public class ExpListActivity extends AppCompatActivity {
 
 
     private int count;
     private Adapter adapter;
-    private ExpandableListContainer refreshContainer;
+    private ExpListContainer refreshContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_expandable_list_layout);
+        setContentView(R.layout.activity_exp_list_layout);
         getSupportActionBar().setTitle("ExpandableListView");
         getSupportActionBar().setElevation(0);
         refreshContainer = findViewById(R.id.refreshContainer);

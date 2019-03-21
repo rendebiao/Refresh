@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
-class ExpandableListWrapperAdapter extends BaseExpandableListAdapter {
+class ExpListAdapter extends BaseExpandableListAdapter {
 
     private boolean showLoad;
     private LoadController loadController;
     private BaseExpandableListAdapter adapter;
-    private ExpandableListContainer expandableListContainer;
+    private ExpListContainer expListContainer;
     private DataSetObserver dataObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
@@ -26,9 +26,10 @@ class ExpandableListWrapperAdapter extends BaseExpandableListAdapter {
         }
     };
 
-    public ExpandableListWrapperAdapter(LoadController loadController, ExpandableListContainer expandableListContainer, BaseExpandableListAdapter adapter) {
+    public ExpListAdapter(LoadController loadController, ExpListContainer expListContainer, BaseExpandableListAdapter adapter) {
         this.loadController = loadController;
-        this.expandableListContainer = expandableListContainer;
+        this.expListContainer = expListContainer;
+        this.showLoad = expListContainer.isShowNoMore();
         setAdapter(adapter);
     }
 
@@ -51,7 +52,8 @@ class ExpandableListWrapperAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return adapter.getGroupCount() + (showLoad ? 1 : 0);
+        int count = adapter.getGroupCount();
+        return count == 0 ? 0 : count + (showLoad ? 1 : 0);
     }
 
     @Override
@@ -88,10 +90,10 @@ class ExpandableListWrapperAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (isLoadItem(groupPosition)) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(expandableListContainer.getContext()).inflate(loadController.getLoadLayout(), parent, false);
+                convertView = LayoutInflater.from(expListContainer.getContext()).inflate(loadController.getLoadLayout(), parent, false);
                 loadController.initLoadView(convertView);
             }
-            loadController.updateLoadView(convertView, expandableListContainer.isLoading());
+            loadController.updateLoadView(convertView, expListContainer.isLoading(), expListContainer.isHasMore());
             return convertView;
         } else {
             return adapter.getGroupView(groupPosition, isExpanded, convertView, parent);

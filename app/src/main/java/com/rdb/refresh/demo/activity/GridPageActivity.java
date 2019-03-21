@@ -60,12 +60,17 @@ public class GridPageActivity extends AppCompatActivity {
             }
 
             @Override
-            public void updateLoadView(View view, boolean loading) {
+            public boolean showNoMore() {
+                return true;
+            }
+
+            @Override
+            public void updateLoadView(View view, boolean loading, boolean hasMore) {
                 TextView loadView = view.findViewById(R.id.loadView);
                 ProgressBar progressBar = view.findViewById(R.id.progressBar);
-                loadView.setText(loading ? "正在加载" : "点击加载更多");
+                loadView.setText(loading ? "正在加载" : (hasMore ? "点击加载更多" : "没有更多"));
                 progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
-                if (!loading) {
+                if (!loading && hasMore) {
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

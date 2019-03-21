@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rdb.refresh.demo.R;
-import com.rdb.refresh.paging.BaseRecyclerAdapter;
 import com.rdb.refresh.paging.Config;
 import com.rdb.refresh.paging.PagingRecycler;
+import com.rdb.refresh.paging.RecyclerAdapter;
 import com.rdb.refresh.paging.Request;
 import com.rdb.refresh.view.RefreshLayout;
 
@@ -61,7 +61,7 @@ public class PageActivity extends AppCompatActivity {
         pagingRecycler.startRefreshingDelay(500);
     }
 
-    class Adapter extends BaseRecyclerAdapter<String> {
+    class Adapter extends RecyclerAdapter<String> {
 
         private LayoutInflater inflater;
 

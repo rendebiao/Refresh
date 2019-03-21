@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter<BaseRecyclerAdapter.ViewHolder> {
+public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private List<D> items;
 
-    public BaseRecyclerAdapter() {
+    public RecyclerAdapter() {
     }
 
     void setItems(List<D> items) {

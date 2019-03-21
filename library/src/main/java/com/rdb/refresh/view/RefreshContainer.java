@@ -18,9 +18,10 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     private int touchSlop;
     private float touchX;
     private boolean hasMore;
+    private boolean autoLoad;
+    private boolean showNoMore;
     private boolean isLoading = false;
     private boolean interceptHorizontal;
-    private boolean autoLoad;
     private int mode = TOP;
     private OnLoadListener loadListener;
     private OnRefreshListener refreshListener;
@@ -82,6 +83,7 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         boolean changed = this.loadController != null;
         this.loadController = loadController;
         autoLoad = loadController == null ? false : loadController.autoLoad();
+        showNoMore = loadController == null ? false : loadController.showNoMore();
         if (changed) {
             onLoadControllerChanged();
         }
@@ -267,6 +269,10 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
 
     public final boolean autoLoad() {
         return autoLoad;
+    }
+
+    public final boolean isShowNoMore() {
+        return showNoMore;
     }
 
     @Override

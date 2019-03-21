@@ -40,7 +40,7 @@ public class GridActivity extends AppCompatActivity {
             }
 
             @Override
-            public void updateLoadView(View view, boolean loading) {
+            public void updateLoadView(View view, boolean loading, boolean hasMore) {
                 TextView loadView = view.findViewById(R.id.loadView);
                 ProgressBar progressBar = view.findViewById(R.id.progressBar);
                 loadView.setText(loading ? "正在加载" : "点击加载更多");

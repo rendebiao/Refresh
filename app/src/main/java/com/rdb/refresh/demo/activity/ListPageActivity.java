@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.rdb.refresh.Refresh;
@@ -16,6 +17,7 @@ import com.rdb.refresh.paging.BaseAdapter;
 import com.rdb.refresh.paging.Config;
 import com.rdb.refresh.paging.PagingList;
 import com.rdb.refresh.paging.Request;
+import com.rdb.refresh.view.LoadController;
 import com.rdb.refresh.view.RefreshLayout;
 
 import java.util.ArrayList;
@@ -63,6 +65,21 @@ public class ListPageActivity extends AppCompatActivity {
         listView.setDivider(null);
         getSupportActionBar().setTitle("ListView 框架示例");
         getSupportActionBar().setElevation(0);
+        pagingList.getRefreshContainer().setRefreshLoadController(new LoadController(R.layout.item_load_layout) {
+
+            @Override
+            public boolean showNoMore() {
+                return true;
+            }
+
+            @Override
+            public void updateLoadView(View view, boolean loading, boolean hasMore) {
+                TextView loadView = view.findViewById(R.id.loadView);
+                ProgressBar progressBar = view.findViewById(R.id.progressBar);
+                loadView.setText(loading ? "正在加载" : (hasMore ? "上拉加载更多" : "没有更多"));
+                progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
+            }
+        });
 
         //请求数据
         pagingList.startRefreshingDelay(500);

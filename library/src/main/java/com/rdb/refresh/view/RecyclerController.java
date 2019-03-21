@@ -60,9 +60,11 @@ public class RecyclerController extends RefreshController<RecyclerView> {
 
     @Override
     protected void onHasMoreChanged(boolean hasMore) {
-        RecyclerView.Adapter adapter = refreshableView.getAdapter();
-        if (adapter instanceof RecyclerWrapperAdapter) {
-            ((RecyclerWrapperAdapter) adapter).setShowLoad(hasMore);
+        if (!container.isShowNoMore()) {
+            RecyclerView.Adapter adapter = refreshableView.getAdapter();
+            if (adapter instanceof RecyclerAdapter) {
+                ((RecyclerAdapter) adapter).setShowLoad(hasMore);
+            }
         }
     }
 

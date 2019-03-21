@@ -3,14 +3,14 @@ package com.rdb.refresh.paging;
 import android.content.Context;
 import android.widget.ExpandableListView;
 
-import com.rdb.refresh.view.ExpandableListContainer;
+import com.rdb.refresh.view.ExpListContainer;
 
-public class PagingExpandableList<D> extends Paging<D, ExpandableListContainer> {
+public class PagingExpList<D> extends Paging<D, ExpListContainer> {
 
     protected ExpandableListView listView;
-    protected BaseExpandableListAdapter<D> adapter;
+    protected ExpListAdapter<D> adapter;
 
-    public PagingExpandableList(Context context, Config config, Request request, BaseExpandableListAdapter<D> adapter) {
+    public PagingExpList(Context context, Config config, Request request, ExpListAdapter<D> adapter) {
         super(context, config, request);
         listView = refreshContainer.getRefreshableView();
         adapter.setItems(getDataList());
@@ -19,8 +19,8 @@ public class PagingExpandableList<D> extends Paging<D, ExpandableListContainer> 
     }
 
     @Override
-    protected ExpandableListContainer createRefreshContainer(Context context) {
-        return new ExpandableListContainer(context);
+    protected ExpListContainer createRefreshContainer(Context context) {
+        return new ExpListContainer(context);
     }
 
     public final void notifyDataSetChanged() {

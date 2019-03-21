@@ -67,8 +67,8 @@ public class RecyclerContainer extends RefreshContainer<RecyclerView> {
             if (loadController == null) {
                 throw new RuntimeException("unset LoadController");
             } else {
-                RecyclerWrapperAdapter recyclerWrapperAdapter = new RecyclerWrapperAdapter(loadController, this, adapter);
-                refreshableView.setAdapter(recyclerWrapperAdapter);
+                RecyclerAdapter recyclerAdapter = new RecyclerAdapter(loadController, this, adapter);
+                refreshableView.setAdapter(recyclerAdapter);
             }
         }
     }

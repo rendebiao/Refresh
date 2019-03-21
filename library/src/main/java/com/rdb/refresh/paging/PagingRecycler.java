@@ -8,9 +8,9 @@ import com.rdb.refresh.view.RecyclerContainer;
 public class PagingRecycler<D> extends Paging<D, RecyclerContainer> {
 
     protected RecyclerView recyclerView;
-    protected BaseRecyclerAdapter<D> adapter;
+    protected RecyclerAdapter<D> adapter;
 
-    public PagingRecycler(Context context, Config config, Request request, BaseRecyclerAdapter<D> adapter) {
+    public PagingRecycler(Context context, Config config, Request request, RecyclerAdapter<D> adapter) {
         super(context, config, request);
         recyclerView = refreshContainer.getRefreshableView();
         adapter.setItems(getDataList());
@@ -38,7 +38,7 @@ public class PagingRecycler<D> extends Paging<D, RecyclerContainer> {
         return recyclerView;
     }
 
-    public final BaseRecyclerAdapter<D> getAdapter() {
+    public final RecyclerAdapter<D> getAdapter() {
         return adapter;
     }
 

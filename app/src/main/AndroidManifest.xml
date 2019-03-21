@@ -24,8 +24,8 @@
         <activity android:name=".activity.GridPageActivity" />
         <activity android:name=".activity.RecyclerActivity" />
         <activity android:name=".activity.PageActivity" />
-        <activity android:name=".activity.ExpandableListActivity" />
-        <activity android:name=".activity.ExpandableListPageActivity" />
+        <activity android:name=".activity.ExpListActivity" />
+        <activity android:name=".activity.ExpListPageActivity" />
     </application>
 
 </manifest>

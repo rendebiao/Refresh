@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LoadController defaultControoler = new LoadController(R.layout.item_load_layout) {
 
             @Override
-            public void updateLoadView(View view, boolean loading) {
+            public void updateLoadView(View view, boolean loading, boolean hasMore) {
                 TextView loadView = view.findViewById(R.id.loadView);
                 ProgressBar progressBar = view.findViewById(R.id.progressBar);
                 loadView.setText(loading ? "正在加载" : "上拉加载更多");
@@ -58,22 +58,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, ListPageActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.gridButton1) {
-            Intent intent = new Intent(this, RefreshGridActivity.class);
+            Intent intent = new Intent(this, GridActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.gridButton2) {
             Intent intent = new Intent(this, GridPageActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.recyclerButton1) {
-            Intent intent = new Intent(this, RefreshRecyclerActivity.class);
+            Intent intent = new Intent(this, RecyclerActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.recyclerButton2) {
             Intent intent = new Intent(this, PageActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.expandableButton1) {
-            Intent intent = new Intent(this, ExpandableListActivity.class);
+            Intent intent = new Intent(this, ExpListActivity.class);
             startActivity(intent);
         } else if (v.getId() == R.id.expandableButton2) {
-            Intent intent = new Intent(this, ExpandableListPageActivity.class);
+            Intent intent = new Intent(this, ExpListPageActivity.class);
             startActivity(intent);
         }
     }

@@ -18,11 +18,15 @@ public class LoadController {
         return true;
     }
 
+    public boolean showNoMore() {
+        return false;
+    }
+
     public void initLoadView(View view) {
 
     }
 
-    public void updateLoadView(View view, boolean loading) {
+    public void updateLoadView(View view, boolean loading, boolean hasMore) {
 
     }
 }

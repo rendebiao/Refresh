@@ -43,8 +43,8 @@ public abstract class AbsListContainer<T extends AbsListView> extends RefreshCon
             if (loadController == null) {
                 throw new RuntimeException("unset LoadController");
             } else {
-                AbsListWrapperAdapter absListWrapperAdapter = new AbsListWrapperAdapter(loadController, this, adapter);
-                refreshableView.setAdapter(absListWrapperAdapter);
+                AbsListAdapter absListAdapter = new AbsListAdapter(loadController, this, adapter);
+                refreshableView.setAdapter(absListAdapter);
             }
         }
     }

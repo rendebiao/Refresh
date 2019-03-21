@@ -11,15 +11,15 @@ import android.widget.TextView;
 
 import com.rdb.refresh.Refresh;
 import com.rdb.refresh.demo.R;
-import com.rdb.refresh.paging.BaseExpandableListAdapter;
 import com.rdb.refresh.paging.Config;
-import com.rdb.refresh.paging.PagingExpandableList;
+import com.rdb.refresh.paging.ExpListAdapter;
+import com.rdb.refresh.paging.PagingExpList;
 import com.rdb.refresh.paging.Request;
 import com.rdb.refresh.view.RefreshLayout;
 
 import java.util.ArrayList;
 
-public class ExpandableListPageActivity extends AppCompatActivity {
+public class ExpListPageActivity extends AppCompatActivity {
 
     private int count;
     Request.TaskRequest taskRequest = new Request.TaskRequest() {
@@ -40,7 +40,7 @@ public class ExpandableListPageActivity extends AppCompatActivity {
             return list;
         }
     };
-    private PagingExpandableList<String> pagingExpandableList;
+    private PagingExpList<String> pagingExpList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +48,18 @@ public class ExpandableListPageActivity extends AppCompatActivity {
         //创建
         Config config = new Config(RefreshLayout.BOTH, R.layout.view_empty_layout);//不指定界面布局 自动创建无样式控件
         config.setPageInfo(1, 10);
-//        pagingExpandableList = new PagingExpandableList<String>(this, config, taskRequest, new Adapter());
-        pagingExpandableList = Refresh.newExpandableList(this, config, taskRequest, new Adapter());
+//        pagingExpList = new PagingExpList<String>(this, config, taskRequest, new Adapter());
+        pagingExpList = Refresh.newExpList(this, config, taskRequest, new Adapter());
         //设置界面
-        setContentView(pagingExpandableList.getView());
+        setContentView(pagingExpList.getView());
         getSupportActionBar().setTitle("ExpandableListView 框架示例");
         getSupportActionBar().setElevation(0);
 
         //请求数据
-        pagingExpandableList.startRefreshingDelay(500);
+        pagingExpList.startRefreshingDelay(500);
     }
 
-    class Adapter extends BaseExpandableListAdapter<String> {
+    class Adapter extends ExpListAdapter<String> {
 
         private LayoutInflater inflater;
 
