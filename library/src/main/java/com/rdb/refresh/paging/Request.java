@@ -42,8 +42,8 @@ public abstract class Request<D> {
 
     public static class Error {
 
-        private int errorType;
-        private Exception exception;
+        private final int errorType;
+        private final Exception exception;
 
         public Error(int errorType, Exception exception) {
             this.errorType = errorType;

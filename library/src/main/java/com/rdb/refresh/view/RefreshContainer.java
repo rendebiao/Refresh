@@ -82,8 +82,8 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
     public void setRefreshLoadController(LoadController loadController) {
         boolean changed = this.loadController != null;
         this.loadController = loadController;
-        autoLoad = loadController == null ? false : loadController.autoLoad();
-        showNoMore = loadController == null ? false : loadController.showNoMore();
+        autoLoad = loadController != null && loadController.autoLoad();
+        showNoMore = loadController != null && loadController.showNoMore();
         if (changed) {
             onLoadControllerChanged();
         }

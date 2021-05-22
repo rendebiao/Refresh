@@ -8,11 +8,9 @@ import android.widget.BaseExpandableListAdapter;
 
 class ExpListAdapter extends BaseExpandableListAdapter {
 
-    private boolean showLoad;
-    private LoadController loadController;
-    private BaseExpandableListAdapter adapter;
-    private ExpListContainer expListContainer;
-    private DataSetObserver dataObserver = new DataSetObserver() {
+    private final LoadController loadController;
+    private final ExpListContainer expListContainer;
+    private final DataSetObserver dataObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
             super.onChanged();
@@ -25,6 +23,8 @@ class ExpListAdapter extends BaseExpandableListAdapter {
             notifyDataSetInvalidated();
         }
     };
+    private boolean showLoad;
+    private BaseExpandableListAdapter adapter;
 
     public ExpListAdapter(LoadController loadController, ExpListContainer expListContainer, BaseExpandableListAdapter adapter) {
         this.loadController = loadController;

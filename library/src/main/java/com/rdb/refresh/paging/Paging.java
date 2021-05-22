@@ -1,12 +1,13 @@
 package com.rdb.refresh.paging;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.FrameLayout;
+
+import androidx.annotation.IdRes;
 
 import com.rdb.refresh.view.RefreshContainer;
 
@@ -15,16 +16,16 @@ import java.util.List;
 
 public abstract class Paging<D, V extends RefreshContainer> {
 
+    private final Request<D> request;
+    private final ArrayList<D> dataList = new ArrayList<D>();
     protected Context context;
     protected Config config;
     protected V refreshContainer;
     private int curPage;
     private View view;
     private View emptyView;
-    private Request<D> request;
     private boolean unloadEmpty;
     private EmptyViewListener emptyViewListener;
-    private ArrayList<D> dataList = new ArrayList<D>();
 
     public Paging(Context context, Config config, Request request) {
         this.context = context;

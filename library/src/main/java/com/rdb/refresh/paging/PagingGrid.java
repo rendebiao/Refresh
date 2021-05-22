@@ -30,7 +30,7 @@ public class PagingGrid<D> extends Paging<D, GridContainer> {
     }
 
     protected final boolean isEmpty() {
-        return adapter == null ? false : adapter.isEmpty();
+        return adapter != null && adapter.isEmpty();
     }
 
     public GridView getRefreshableView() {

@@ -1,23 +1,21 @@
 package com.rdb.refresh.view;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RefreshItemHolder> {
 
     private static final int LOAD_TYPE_ID = Integer.MIN_VALUE;
-
-    private boolean showLoad;
-    private RecyclerView.Adapter adapter;
-    private LoadController loadController;
-    private RecyclerContainer recyclerContainer;
-    private RecyclerView.AdapterDataObserver dataObserver = new RecyclerView.AdapterDataObserver() {
+    private final LoadController loadController;
+    private final RecyclerContainer recyclerContainer;
+    private final RecyclerView.AdapterDataObserver dataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
             super.onChanged();
@@ -54,6 +52,8 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RefreshItemHo
             notifyItemMoved(fromPosition, toPosition);
         }
     };
+    private boolean showLoad;
+    private RecyclerView.Adapter adapter;
 
     public RecyclerAdapter(LoadController loadController, RecyclerContainer recyclerContainer, RecyclerView.Adapter adapter) {
         this.loadController = loadController;
@@ -192,7 +192,7 @@ class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RefreshItemHo
 
     public static class RefreshItemHolder extends RecyclerView.ViewHolder {
 
-        private RecyclerView.ViewHolder viewHolder;
+        private final RecyclerView.ViewHolder viewHolder;
 
         public RefreshItemHolder(View itemView, RecyclerView.ViewHolder viewHolder) {
             super(itemView);

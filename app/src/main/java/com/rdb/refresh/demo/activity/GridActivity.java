@@ -1,14 +1,15 @@
 package com.rdb.refresh.demo.activity;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.rdb.refresh.demo.R;
 import com.rdb.refresh.view.GridContainer;
@@ -87,7 +88,7 @@ public class GridActivity extends AppCompatActivity {
 
     class Adapter extends BaseAdapter {
 
-        private LayoutInflater inflater;
+        private final LayoutInflater inflater;
 
         public Adapter(LayoutInflater inflater) {
             this.inflater = inflater;

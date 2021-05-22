@@ -3,12 +3,13 @@ package com.rdb.refresh.demo.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.rdb.refresh.demo.R;
 import com.rdb.refresh.paging.BaseAdapter;
@@ -93,7 +94,7 @@ public class GridPageActivity extends AppCompatActivity {
 
     class Adapter extends BaseAdapter {
 
-        private LayoutInflater inflater;
+        private final LayoutInflater inflater;
 
         public Adapter() {
             this.inflater = getLayoutInflater();

@@ -1,7 +1,8 @@
 package com.rdb.refresh.paging;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.rdb.refresh.view.RecyclerContainer;
 
@@ -31,7 +32,7 @@ public class PagingRecycler<D> extends Paging<D, RecyclerContainer> {
     }
 
     protected final boolean isEmpty() {
-        return adapter == null ? false : adapter.getItemCount() == 0;
+        return adapter != null && adapter.getItemCount() == 0;
     }
 
     public final RecyclerView getRefreshableView() {

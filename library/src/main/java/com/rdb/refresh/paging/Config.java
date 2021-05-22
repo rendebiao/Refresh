@@ -1,8 +1,8 @@
 package com.rdb.refresh.paging;
 
-import android.support.annotation.IdRes;
-import android.support.annotation.IntDef;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.IntDef;
+import androidx.annotation.LayoutRes;
 
 import com.rdb.refresh.Refresh;
 import com.rdb.refresh.view.RefreshLayout;

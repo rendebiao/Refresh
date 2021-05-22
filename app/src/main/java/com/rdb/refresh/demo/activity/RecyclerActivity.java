@@ -1,15 +1,16 @@
 package com.rdb.refresh.demo.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.rdb.refresh.demo.R;
 import com.rdb.refresh.view.RecyclerContainer;
@@ -62,7 +63,7 @@ public class RecyclerActivity extends AppCompatActivity {
 
     class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
-        private LayoutInflater inflater;
+        private final LayoutInflater inflater;
 
         public Adapter(LayoutInflater inflater) {
             this.inflater = inflater;

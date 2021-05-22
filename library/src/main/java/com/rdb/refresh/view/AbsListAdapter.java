@@ -2,20 +2,19 @@ package com.rdb.refresh.view;
 
 import android.database.DataSetObserver;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
 class AbsListAdapter extends BaseAdapter {
 
-    private boolean showLoad;
-    private BaseAdapter adapter;
-    private LoadController loadController;
-    private AbsListContainer listContainer;
-    private DataSetObserver dataObserver = new DataSetObserver() {
+    private final LoadController loadController;
+    private final AbsListContainer listContainer;
+    private final DataSetObserver dataObserver = new DataSetObserver() {
         @Override
         public void onChanged() {
             super.onChanged();
@@ -28,6 +27,8 @@ class AbsListAdapter extends BaseAdapter {
             notifyDataSetInvalidated();
         }
     };
+    private boolean showLoad;
+    private BaseAdapter adapter;
 
     public AbsListAdapter(LoadController loadController, AbsListContainer listContainer, BaseAdapter adapter) {
         this.loadController = loadController;

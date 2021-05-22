@@ -4,7 +4,7 @@ import android.view.View;
 
 public class LoadController {
 
-    private int loadLayout;
+    private final int loadLayout;
 
     public LoadController(int loadLayout) {
         this.loadLayout = loadLayout;

@@ -30,7 +30,7 @@ public class PagingExpList<D> extends Paging<D, ExpListContainer> {
     }
 
     protected final boolean isEmpty() {
-        return adapter == null ? false : adapter.isEmpty();
+        return adapter != null && adapter.isEmpty();
     }
 
     public ExpandableListView getRefreshableView() {

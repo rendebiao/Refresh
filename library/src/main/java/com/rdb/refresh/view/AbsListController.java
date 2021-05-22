@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class AbsListController<T extends AbsListView> extends RefreshController<T> {
 
-    private AbsListScrollListener absListScrollListener = new AbsListScrollListener();
+    private final AbsListScrollListener absListScrollListener = new AbsListScrollListener();
 
     public AbsListController() {
         super();
@@ -115,8 +115,8 @@ public class AbsListController<T extends AbsListView> extends RefreshController<
 
     static class AbsListScrollListener implements AbsListView.OnScrollListener {
 
+        private final Set<AbsListView.OnScrollListener> scrollListeners = new HashSet<>();
         private AbsListView.OnScrollListener setListener;
-        private Set<AbsListView.OnScrollListener> scrollListeners = new HashSet<>();
 
         @Override
         public void onScrollStateChanged(AbsListView absListView, int scrollState) {

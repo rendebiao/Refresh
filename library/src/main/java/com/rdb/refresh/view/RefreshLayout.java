@@ -1,11 +1,13 @@
 package com.rdb.refresh.view;
 
 import android.content.Context;
-import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
-public class RefreshLayout extends android.support.v4.widget.SwipeRefreshLayout {
+import androidx.annotation.IntDef;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+public class RefreshLayout extends SwipeRefreshLayout {
 
     public static final int NONE = 0;
     public static final int TOP = 1;
