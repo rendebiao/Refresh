@@ -218,6 +218,7 @@ public abstract class RefreshContainer<T extends View> extends RefreshLayout {
         if (refreshing) {
             setHasMore(false);
         }
+        refreshController.onRefreshing(refreshing);
         super.setRefreshing(refreshing);
     }
 

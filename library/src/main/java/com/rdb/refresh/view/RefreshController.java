@@ -29,5 +29,7 @@ public abstract class RefreshController<T extends View> {
     protected abstract void onHasMoreChanged(boolean hasMore);
 
     protected abstract void onLoadingChanged(boolean loading);
+
+    protected abstract void onRefreshing(boolean refreshing);
 }
 

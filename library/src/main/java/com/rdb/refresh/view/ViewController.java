@@ -37,4 +37,9 @@ public class ViewController extends RefreshController<View> {
     protected void onLoadingChanged(boolean loading) {
 
     }
+
+    @Override
+    protected void onRefreshing(boolean refreshing) {
+
+    }
 }

@@ -12,6 +12,7 @@ import java.util.Set;
 public class AbsListController<T extends AbsListView> extends RefreshController<T> {
 
     private final AbsListScrollListener absListScrollListener = new AbsListScrollListener();
+    private boolean canLoad;
 
     public AbsListController() {
         super();
@@ -21,16 +22,16 @@ public class AbsListController<T extends AbsListView> extends RefreshController<
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (!hasLoad && container != null && container.autoLoad() && container.isHasMore() && container.isBottomEnable() && !container.isRefreshing() && !container.isLoading() && !isScrollTop() && isReadyForLoading()) {
+                if (canLoad && container != null && container.autoLoad() && container.isHasMore() && container.isBottomEnable() && !container.isRefreshing() && !container.isLoading() && !isScrollTop() && isReadyForLoading()) {
                     container.startLoading();
-                    hasLoad = true;
+                    canLoad = false;
                 }
             }
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    hasLoad = false;
+                    canLoad = true;
                 }
             }
         });
@@ -108,6 +109,11 @@ public class AbsListController<T extends AbsListView> extends RefreshController<
         if (adapter instanceof BaseAdapter) {
             ((BaseAdapter) adapter).notifyDataSetChanged();
         }
+    }
+
+    @Override
+    protected void onRefreshing(boolean refreshing) {
+        canLoad = false;
     }
 
     private boolean isScrollTop() {
