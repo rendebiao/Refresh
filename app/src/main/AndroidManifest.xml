@@ -9,23 +9,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ViewActivity" />
-        <activity android:name=".activity.ScrollActivity" />
-        <activity android:name=".activity.ListActivity" />
-        <activity android:name=".activity.ListPageActivity" />
-        <activity android:name=".activity.GridActivity" />
-        <activity android:name=".activity.GridPageActivity" />
-        <activity android:name=".activity.RecyclerActivity" />
-        <activity android:name=".activity.PageActivity" />
-        <activity android:name=".activity.ExpListActivity" />
-        <activity android:name=".activity.ExpListPageActivity" />
+        <activity
+            android:name=".activity.ViewActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.ScrollActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.ListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.ListPageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.GridActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.GridPageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.RecyclerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.PageActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.ExpListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.ExpListPageActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
